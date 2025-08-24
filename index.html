@@ -128,13 +128,42 @@ h2 {
   width: 30px;
   height: 30px;
 }
+
+/* Botón flotante Gmail */
+.gmail-btn {
+  position: fixed;
+  bottom: 100px; /* justo encima del botón WhatsApp */
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: #D44638; /* rojo Gmail */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  z-index: 1000;
+}
+
+.gmail-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
+.gmail-btn img {
+  width: 30px;
+  height: 30px;
+}
 </style>
 </head>
 <body>
 
 <!-- Encabezado con logo -->
 <h1>
-  <img src="https://archive.org/download/whats-app-image-2025-08-24-at-17.32.37/VIANNEY%20CONTA.png" alt="Logo"></h1>
+  <img src="https://archive.org/download/whats-app-image-2025-08-24-at-17.32.37/VIANNEY%20CONTA.png" alt="Logo">
+</h1>
 
 <!-- Título principal -->
 <h2>Páginas principales</h2>
@@ -148,9 +177,14 @@ h2 {
   <button class="btn btn-pink" onclick="window.open('https://mascontable.maserp.cl/','_blank')">Mascontable</button>
 </div>
 
-<!-- Botón WhatsApp -->
+<!-- Botón flotante WhatsApp -->
 <div class="whatsapp-btn" onclick="window.open('https://web.whatsapp.com/send?phone=569XXXXXXXX&text=Hola!','_blank')">
   <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+</div>
+
+<!-- Botón flotante Gmail -->
+<div class="gmail-btn" onclick="window.open('https://mail.google.com/', '_blank')">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Gmail_Icon.png" alt="Gmail">
 </div>
 
 </body>
