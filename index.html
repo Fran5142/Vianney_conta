@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vianney_conta</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #a8e6a3, #c1f0b4, #d9f7c9); /* Verde claro y moderno */
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Encabezado con logo */
+h1 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 2.2em;
+  margin-bottom: 20px;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+h1 img {
+  width: 300px; /* tamaño del logo */
+  height: auto;
+}
+
+/* Título h2 mejorado */
+h2 {
+  font-size: 2.8em; /* más grande */
+  font-weight: 500;
+  margin-bottom: 30px;
+  text-align: center;
+  color: #ffffff;
+  text-shadow: 1px 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Contenedor de botones */
+.btn-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.btn {
+  padding: 22px 48px;
+  font-size: 1.3em;
+  font-weight: 600;
+  color: #fff;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  background-size: 200% 100%;
+  transition: all 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: rgba(255,255,255,0.2);
+  transform: rotate(45deg) translate(-100%, -100%);
+  transition: all 0.5s ease;
+}
+
+.btn:hover::after {
+  transform: rotate(45deg) translate(100%, 100%);
+}
+
+.btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 20px 4px rgba(0,255,128,0.6), 0 12px 28px rgba(0, 0, 0, 0.3);
+  background-position: right center;
+}
+
+.btn-blue { background-image: linear-gradient(90deg,#42a5f5,#1e88e5); }
+.btn-red { background-image: linear-gradient(90deg,#ef5350,#e53935); }
+.btn-orange { background-image: linear-gradient(90deg,#ffa726,#fb8c00); }
+.btn-purple { background-image: linear-gradient(90deg,#ab47bc,#8e24aa); }
+.btn-pink { background-image: linear-gradient(90deg,#ec407a,#d81b60); }
+
+@media(max-width:900px){
+  .btn-container { flex-direction: column; align-items:center; }
+  .btn { width:80%; }
+}
+
+/* Botón flotante WhatsApp */
+.whatsapp-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  z-index: 1000;
+}
+
+.whatsapp-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
+.whatsapp-btn img {
+  width: 30px;
+  height: 30px;
+}
+</style>
+</head>
+<body>
+
+<!-- Encabezado con logo -->
+<h1>
+  <img src="https://archive.org/download/whats-app-image-2025-08-24-at-17.32.37/VIANNEY%20CONTA.png" alt="Logo"></h1>
+
+<!-- Título principal -->
+<h2>Páginas principales</h2>
+
+<!-- Botones -->
+<div class="btn-container">
+  <button class="btn btn-blue" onclick="window.open('https://autentica.tgr.cl/oauth2/authorize-front?client_id=10m9frd2n5porvv6nuv8314nas&redirect_uri=https:%2F%2Fwww.tesoreria.cl%2FLoginPortalCognito%2F&response_type=code&providers=ClaveTesoreria,ClaveTributaria,ClaveUnica&sesion=true','_blank')">TGR</button>
+  <button class="btn btn-red" onclick="window.open('https://www.previred.com/wPortal/login/login.jsp','_blank')">Previred</button>
+  <button class="btn btn-orange" onclick="window.open('https://midt.dirtrab.cl/welcome','_blank')">Dirección del Trabajo</button>
+  <button class="btn btn-purple" onclick="window.open('https://zeusr.sii.cl/AUT2000/InicioAutenticacion/IngresoRutClave.html?https://misiir.sii.cl/cgi_misii/siihome.cgi/','_blank')">SII</button>
+  <button class="btn btn-pink" onclick="window.open('https://mascontable.maserp.cl/','_blank')">Mascontable</button>
+</div>
+
+<!-- Botón WhatsApp -->
+<div class="whatsapp-btn" onclick="window.open('https://web.whatsapp.com/send?phone=569XXXXXXXX&text=Hola!','_blank')">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+</div>
+
+</body>
+</html>
