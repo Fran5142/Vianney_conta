@@ -11,11 +11,13 @@ body {
   font-family: 'Inter', sans-serif;
   margin: 0;
   padding: 40px 20px;
-  background: linear-gradient(135deg, #a8e6a3, #c1f0b4, #d9f7c9); /* Verde claro y moderno */
+  /* Fondo rosado invertido: claro arriba, más oscuro abajo */
+  background: linear-gradient(180deg, #f8c3df, #e07ac3, #c44bb1);
   color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
   min-height: 100vh;
 }
 
@@ -31,13 +33,13 @@ h1 {
 }
 
 h1 img {
-  width: 300px; /* tamaño del logo */
+  width: 300px; 
   height: auto;
 }
 
-/* Título h2 mejorado */
+/* Título principal */
 h2 {
-  font-size: 2.8em; /* más grande */
+  font-size: 2.8em; 
   font-weight: 500;
   margin-bottom: 30px;
   text-align: center;
@@ -63,7 +65,8 @@ h2 {
   cursor: pointer;
   background-size: 200% 100%;
   transition: all 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+  text-align: center;
   position: relative;
   overflow: hidden;
 }
@@ -86,29 +89,27 @@ h2 {
 
 .btn:hover {
   transform: translateY(-4px);
-  box-shadow: 0 0 20px 4px rgba(0,255,128,0.6), 0 12px 28px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 12px 28px rgba(255,182,193,0.6);
   background-position: right center;
 }
 
-.btn-blue { background-image: linear-gradient(90deg,#42a5f5,#1e88e5); }
-.btn-red { background-image: linear-gradient(90deg,#ef5350,#e53935); }
-.btn-orange { background-image: linear-gradient(90deg,#ffa726,#fb8c00); }
-.btn-purple { background-image: linear-gradient(90deg,#ab47bc,#8e24aa); }
-.btn-pink { background-image: linear-gradient(90deg,#ec407a,#d81b60); }
+.btn-blue { background-image: linear-gradient(90deg,#3498db,#1abc9c); }
+.btn-red { background-image: linear-gradient(90deg,#e74c3c,#ff7675); }
+.btn-green { background-image: linear-gradient(90deg,#2ecc71,#27ae60); }
+.btn-orange { background-image: linear-gradient(90deg,#f1c40f,#f39c12); }
+.btn-purple { background-image: linear-gradient(90deg,#9b59b6,#8e44ad); }
 
 @media(max-width:900px){
   .btn-container { flex-direction: column; align-items:center; }
-  .btn { width:80%; }
+  .btn { width:80%; text-align:center; }
 }
 
-/* Botón flotante WhatsApp */
-.whatsapp-btn {
+/* Botones flotantes */
+.floating-btn {
   position: fixed;
   bottom: 20px;
-  right: 20px;
   width: 60px;
   height: 60px;
-  background-color: #25D366;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -116,45 +117,34 @@ h2 {
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: bounceIn 0.6s, glowPulse 2s infinite;
   z-index: 1000;
 }
 
-.whatsapp-btn:hover {
-  transform: translateY(-3px);
+.floating-btn:hover {
+  transform: translateY(-5px) scale(1.05);
   box-shadow: 0 8px 20px rgba(0,0,0,0.4);
 }
 
-.whatsapp-btn img {
+.floating-btn img {
   width: 30px;
   height: 30px;
 }
 
-/* Botón flotante Gmail */
-.gmail-btn {
-  position: fixed;
-  bottom: 100px; /* justo encima del botón WhatsApp */
-  right: 20px;
-  width: 60px;
-  height: 60px;
-  background-color: #D44638; /* rojo Gmail */
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  z-index: 1000;
+/* Posiciones */
+.whatsapp-btn { right: 20px; background-color: #25D366; bottom: 20px; }
+.gmail-btn { right: 100px; background-color: #D44638; bottom: 20px; }
+
+/* Animaciones */
+@keyframes bounceIn {
+  0% { transform: scale(0); }
+  60% { transform: scale(1.2); }
+  100% { transform: scale(1); }
 }
 
-.gmail-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-}
-
-.gmail-btn img {
-  width: 30px;
-  height: 30px;
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 4px 12px rgba(0,0,0,0.3), 0 0 15px rgba(255,255,255,0.1); }
+  50% { box-shadow: 0 4px 12px rgba(0,0,0,0.3), 0 0 25px rgba(255,255,255,0.3); }
 }
 </style>
 </head>
@@ -168,22 +158,21 @@ h2 {
 <!-- Título principal -->
 <h2>Páginas principales</h2>
 
-<!-- Botones -->
 <div class="btn-container">
   <button class="btn btn-blue" onclick="window.open('https://autentica.tgr.cl/oauth2/authorize-front?client_id=10m9frd2n5porvv6nuv8314nas&redirect_uri=https:%2F%2Fwww.tesoreria.cl%2FLoginPortalCognito%2F&response_type=code&providers=ClaveTesoreria,ClaveTributaria,ClaveUnica&sesion=true','_blank')">TGR</button>
   <button class="btn btn-red" onclick="window.open('https://www.previred.com/wPortal/login/login.jsp','_blank')">Previred</button>
-  <button class="btn btn-orange" onclick="window.open('https://midt.dirtrab.cl/welcome','_blank')">Dirección del Trabajo</button>
-  <button class="btn btn-purple" onclick="window.open('https://zeusr.sii.cl/AUT2000/InicioAutenticacion/IngresoRutClave.html?https://misiir.sii.cl/cgi_misii/siihome.cgi/','_blank')">SII</button>
-  <button class="btn btn-pink" onclick="window.open('https://mascontable.maserp.cl/','_blank')">Mascontable</button>
+  <button class="btn btn-green" onclick="window.open('https://midt.dirtrab.cl/welcome','_blank')">Dirección del Trabajo</button>
+  <button class="btn btn-orange" onclick="window.open('https://zeusr.sii.cl/AUT2000/InicioAutenticacion/IngresoRutClave.html?https://misiir.sii.cl/cgi_misii/siihome.cgi/','_blank')">SII</button>
+  <button class="btn btn-purple" onclick="window.open('https://mascontable.maserp.cl/','_blank')">Mascontable</button>
 </div>
 
 <!-- Botón flotante WhatsApp -->
-<div class="whatsapp-btn" onclick="window.open('https://web.whatsapp.com/send?phone=569XXXXXXXX&text=Hola!','_blank')">
+<div class="floating-btn whatsapp-btn" onclick="window.open('https://web.whatsapp.com/send?phone=569XXXXXXXX&text=Hola!','_blank')">
   <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
 </div>
 
 <!-- Botón flotante Gmail -->
-<div class="gmail-btn" onclick="window.open('https://mail.google.com/', '_blank')">
+<div class="floating-btn gmail-btn" onclick="window.open('https://mail.google.com/','_blank')">
   <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Gmail_Icon.png" alt="Gmail">
 </div>
 
