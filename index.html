@@ -20,7 +20,6 @@ body {
   min-height: 100vh;
 }
 
-/* Encabezado con logo */
 h1 {
   display: flex;
   align-items: center;
@@ -31,12 +30,8 @@ h1 {
   text-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
-h1 img {
-  width: 300px; 
-  height: auto;
-}
+h1 img { width: 300px; height: auto; }
 
-/* Título principal */
 h2 {
   font-size: 2.8em; 
   font-weight: 500;
@@ -46,7 +41,6 @@ h2 {
   text-shadow: 1px 2px 4px rgba(0,0,0,0.3);
 }
 
-/* Contenedor de botones */
 .btn-container {
   display: flex;
   flex-wrap: wrap;
@@ -115,35 +109,18 @@ h2 {
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  animation: bounceIn 0.6s, glowPulse 2s infinite;
   z-index: 1000;
 }
 
-.floating-btn:hover {
-  transform: translateY(-5px) scale(1.05);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-}
+.floating-btn img, .floating-btn svg { width: 28px; height: 28px; }
 
-.floating-btn img {
-  width: 30px;
-  height: 30px;
-}
+.whatsapp-btn { right: 20px; background-color: #25D366; bottom: 20px; animation: bounce 2s infinite; }
+.gmail-btn { right: 100px; background-color: #D44638; bottom: 20px; animation: bounce 2s infinite 0.2s; }
+.calc-btn { right: 180px; background-color: #8e44ad; bottom: 20px; animation: bounce 2s infinite 0.4s; }
 
-/* Posiciones */
-.whatsapp-btn { right: 20px; background-color: #25D366; bottom: 20px; }
-.gmail-btn { right: 100px; background-color: #D44638; bottom: 20px; }
-.calc-btn { right: 180px; background-color: #8e44ad; bottom: 20px; }
-
-/* Animaciones */
-@keyframes bounceIn {
-  0% { transform: scale(0); }
-  60% { transform: scale(1.2); }
-  100% { transform: scale(1); }
-}
-
-@keyframes glowPulse {
-  0%, 100% { box-shadow: 0 4px 12px rgba(0,0,0,0.3), 0 0 15px rgba(255,255,255,0.1); }
-  50% { box-shadow: 0 4px 12px rgba(0,0,0,0.3), 0 0 25px rgba(255,255,255,0.3); }
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
 }
 
 /* Calculadora flotante */
@@ -195,12 +172,10 @@ h2 {
 </head>
 <body>
 
-<!-- Encabezado con logo -->
 <h1>
   <img src="https://archive.org/download/whats-app-image-2025-08-24-at-17.32.37/VIANNEY%20CONTA.png" alt="Logo">
 </h1>
 
-<!-- Título principal -->
 <h2>Páginas principales</h2>
 
 <div class="btn-container">
@@ -220,9 +195,8 @@ h2 {
   <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Gmail_Icon.png" alt="Gmail">
 </div>
 
-<!-- Botón flotante calculadora moderno -->
 <div class="floating-btn calc-btn" onclick="toggleCalc()">
-  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="white" viewBox="0 0 24 24">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
     <path d="M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 2v16h12V4H6zm2 2h2v2H8V6zm4 0h2v2h-2V6zm-4 4h2v2H8v-2zm4 0h2v2h-2v-2zm-4 4h2v2H8v-2zm4 0h2v2h-2v-2z"/>
   </svg>
 </div>
@@ -282,7 +256,6 @@ function calculate() {
   }
 }
 
-// Soporte teclado
 document.addEventListener("keydown", function(event) {
   const modal = document.getElementById("calcModal");
   if (modal.style.display !== "flex") return;
@@ -294,7 +267,6 @@ document.addEventListener("keydown", function(event) {
   document.getElementById("calc-display").textContent = calcExpression;
 });
 
-// Cerrar modal al hacer clic fuera
 document.getElementById("calcModal").addEventListener("click", function(e){
   if(e.target.id==="calcModal") toggleCalc();
 });
