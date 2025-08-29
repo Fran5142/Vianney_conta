@@ -11,7 +11,6 @@ body {
   font-family: 'Inter', sans-serif;
   margin: 0;
   padding: 40px 20px;
-  /* Fondo rosado invertido: claro arriba, más oscuro abajo */
   background: linear-gradient(180deg, #f8c3df, #e07ac3, #c44bb1);
   color: #fff;
   display: flex;
@@ -107,7 +106,6 @@ h2 {
 /* Botones flotantes */
 .floating-btn {
   position: fixed;
-  bottom: 20px;
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -134,6 +132,7 @@ h2 {
 /* Posiciones */
 .whatsapp-btn { right: 20px; background-color: #25D366; bottom: 20px; }
 .gmail-btn { right: 100px; background-color: #D44638; bottom: 20px; }
+.calc-btn { right: 180px; background-color: #8e44ad; bottom: 20px; }
 
 /* Animaciones */
 @keyframes bounceIn {
@@ -146,6 +145,52 @@ h2 {
   0%, 100% { box-shadow: 0 4px 12px rgba(0,0,0,0.3), 0 0 15px rgba(255,255,255,0.1); }
   50% { box-shadow: 0 4px 12px rgba(0,0,0,0.3), 0 0 25px rgba(255,255,255,0.3); }
 }
+
+/* Calculadora flotante */
+.calc-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+.calc-container {
+  background: #2c003e;
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  width: 300px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+.calc-display {
+  background: #3a0d57;
+  color: #fff;
+  font-size: 2rem;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  text-align: right;
+  font-family: monospace;
+}
+.calc-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+.calc-buttons button {
+  padding: 15px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 8px;
+  background: #6c3483;
+  color: white;
+  cursor: pointer;
+}
+.calc-buttons button:hover { background: #8e44ad; }
+.calc-buttons .equal { background: #9b59b6; }
+.calc-buttons .clear { background: #e74c3c; }
 </style>
 </head>
 <body>
@@ -160,25 +205,100 @@ h2 {
 
 <div class="btn-container">
   <button class="btn btn-blue" onclick="window.open('https://autentica.tgr.cl/oauth2/authorize-front?client_id=10m9frd2n5porvv6nuv8314nas&redirect_uri=https:%2F%2Fwww.tesoreria.cl%2FLoginPortalCognito%2F&response_type=code&providers=ClaveTesoreria,ClaveTributaria,ClaveUnica&sesion=true','_blank')">TGR</button>
- 
- <button class="btn btn-red" onclick="window.open('https://www.previred.com/wPortal/login/login.jsp','_blank')">Previred</button>
- 
- <button class="btn btn-green" onclick="window.open('https://midt.dirtrab.cl/welcome','_blank')">DT</button>
-
+  <button class="btn btn-red" onclick="window.open('https://www.previred.com/wPortal/login/login.jsp','_blank')">Previred</button>
+  <button class="btn btn-green" onclick="window.open('https://midt.dirtrab.cl/welcome','_blank')">DT</button>
   <button class="btn btn-orange" onclick="window.open('https://zeusr.sii.cl/AUT2000/InicioAutenticacion/IngresoRutClave.html?https://misiir.sii.cl/cgi_misii/siihome.cgi/','_blank')">SII</button>
- 
- <button class="btn btn-purple" onclick="window.open('https://mascontable.maserp.cl/','_blank')">Mascontable</button>
+  <button class="btn btn-purple" onclick="window.open('https://mascontable.maserp.cl/','_blank')">Mascontable</button>
 </div>
 
-<!-- Botón flotante WhatsApp -->
+<!-- Botones flotantes -->
 <div class="floating-btn whatsapp-btn" onclick="window.open('https://web.whatsapp.com/send?phone=569XXXXXXXX&text=Hola!','_blank')">
   <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
 </div>
 
-<!-- Botón flotante Gmail -->
 <div class="floating-btn gmail-btn" onclick="window.open('https://mail.google.com/','_blank')">
   <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Gmail_Icon.png" alt="Gmail">
 </div>
+
+<!-- Botón flotante calculadora moderno -->
+<div class="floating-btn calc-btn" onclick="toggleCalc()">
+  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="white" viewBox="0 0 24 24">
+    <path d="M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 2v16h12V4H6zm2 2h2v2H8V6zm4 0h2v2h-2V6zm-4 4h2v2H8v-2zm4 0h2v2h-2v-2zm-4 4h2v2H8v-2zm4 0h2v2h-2v-2z"/>
+  </svg>
+</div>
+
+<!-- Modal calculadora -->
+<div class="calc-modal" id="calcModal">
+  <div class="calc-container">
+    <div id="calc-display" class="calc-display">0</div>
+    <div class="calc-buttons">
+      <button class="clear" onclick="clearCalc()">C</button>
+      <button onclick="appendCalc('/')">÷</button>
+      <button onclick="appendCalc('*')">×</button>
+      <button onclick="appendCalc('-')">−</button>
+      <button onclick="appendCalc('7')">7</button>
+      <button onclick="appendCalc('8')">8</button>
+      <button onclick="appendCalc('9')">9</button>
+      <button onclick="appendCalc('+')">+</button>
+      <button onclick="appendCalc('4')">4</button>
+      <button onclick="appendCalc('5')">5</button>
+      <button onclick="appendCalc('6')">6</button>
+      <button onclick="appendCalc('.')">.</button>
+      <button onclick="appendCalc('1')">1</button>
+      <button onclick="appendCalc('2')">2</button>
+      <button onclick="appendCalc('3')">3</button>
+      <button class="equal" onclick="calculate()">=</button>
+      <button onclick="appendCalc('0')" style="grid-column: span 2;">0</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let calcExpression = "";
+
+function toggleCalc() {
+  const modal = document.getElementById("calcModal");
+  modal.style.display = (modal.style.display === "flex") ? "none" : "flex";
+}
+
+function appendCalc(value) {
+  if (calcExpression === "0") calcExpression = "";
+  calcExpression += value;
+  document.getElementById("calc-display").textContent = calcExpression;
+}
+
+function clearCalc() {
+  calcExpression = "";
+  document.getElementById("calc-display").textContent = "0";
+}
+
+function calculate() {
+  try {
+    calcExpression = eval(calcExpression).toString();
+    document.getElementById("calc-display").textContent = calcExpression;
+  } catch {
+    document.getElementById("calc-display").textContent = "Error";
+    calcExpression = "";
+  }
+}
+
+// Soporte teclado
+document.addEventListener("keydown", function(event) {
+  const modal = document.getElementById("calcModal");
+  if (modal.style.display !== "flex") return;
+  const key = event.key;
+  if (!isNaN(key) || "+-*/.".includes(key)) appendCalc(key);
+  else if (key === "Enter" || key === "=") { event.preventDefault(); calculate(); }
+  else if (key === "Backspace") calcExpression = calcExpression.slice(0,-1) || "0";
+  else if (key === "Escape") clearCalc();
+  document.getElementById("calc-display").textContent = calcExpression;
+});
+
+// Cerrar modal al hacer clic fuera
+document.getElementById("calcModal").addEventListener("click", function(e){
+  if(e.target.id==="calcModal") toggleCalc();
+});
+</script>
 
 </body>
 </html>
