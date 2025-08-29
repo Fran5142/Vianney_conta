@@ -97,6 +97,7 @@ h2 { font-size: 2.8em; font-weight: 500; margin-bottom: 30px; text-align: center
 .calc-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 2000; }
 .calc-container { background: #2c003e; color: white; padding: 20px; border-radius: 12px; width: 300px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
 .calc-display { background: #3a0d57; color: #fff; font-size: 2rem; padding: 10px; border-radius: 8px; margin-bottom: 10px; text-align: right; font-family: monospace; }
+.calc-history { background:#2c003e; font-size:1rem; color:#ffeb3b; text-align:right; margin-bottom:5px; min-height:20px; overflow-wrap: break-word; }
 .calc-buttons { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; }
 .calc-buttons button { padding: 15px; font-size: 1.2rem; border: none; border-radius: 8px; background: #6c3483; color: white; cursor: pointer; }
 .calc-buttons button:hover { background: #8e44ad; }
@@ -200,6 +201,7 @@ h2 { font-size: 2.8em; font-weight: 500; margin-bottom: 30px; text-align: center
   <button class="btn btn-green" onclick="window.open('https://midt.dirtrab.cl/welcome','_blank')">DT</button>
   <button class="btn btn-orange" onclick="window.open('https://zeusr.sii.cl/AUT2000/InicioAutenticacion/IngresoRutClave.html?https://misiir.sii.cl/cgi_misii/siihome.cgi/','_blank')">SII</button>
   <button class="btn btn-purple" onclick="window.open('https://mascontable.maserp.cl/','_blank')">Mascontable</button>
+  <button class="btn btn-blue" onclick="window.open('https://www.registrodeempresasysociedades.cl/','_blank')">Empresa en un día</button>
 </div>
 
 <div class="floating-btn whatsapp-btn" onclick="window.open('https://web.whatsapp.com/send?phone=569XXXXXXXX&text=Hola!','_blank')">
@@ -225,6 +227,7 @@ h2 { font-size: 2.8em; font-weight: 500; margin-bottom: 30px; text-align: center
 <!-- Calculadora -->
 <div class="calc-modal" id="calcModal">
   <div class="calc-container">
+    <div id="calc-history" class="calc-history"></div>
     <div id="calc-display" class="calc-display">0</div>
     <div class="calc-buttons">
       <button class="clear" onclick="clearCalc()">C</button>
@@ -260,13 +263,27 @@ h2 { font-size: 2.8em; font-weight: 500; margin-bottom: 30px; text-align: center
 
 <script>
 let calcExpression="";
-function toggleCalc(){ const modal=document.getElementById("calcModal"); modal.style.display=(modal.style.display==="flex")?"none":"flex"; }
-function appendCalc(value){ if(calcExpression==="0")calcExpression=""; calcExpression+=value; document.getElementById("calc-display").textContent=calcExpression; }
-function clearCalc(){ calcExpression=""; document.getElementById("calc-display").textContent="0"; }
+function toggleCalc(){ 
+  const modal=document.getElementById("calcModal"); 
+  modal.style.display=(modal.style.display==="flex")?"none":"flex"; 
+}
+function appendCalc(value){ 
+  if(calcExpression==="0") calcExpression=""; 
+  calcExpression+=value; 
+  document.getElementById("calc-display").textContent=calcExpression; 
+}
+
+function clearCalc(){ 
+  calcExpression=""; 
+  document.getElementById("calc-display").textContent="0"; 
+  document.getElementById("calc-history").textContent="";
+}
+
 function calculate() {
   try {
     let result = eval(calcExpression);
     result = Math.round(result * 100) / 100; // Redondeo a 2 decimales
+    document.getElementById("calc-history").textContent = calcExpression + " = " + result;
     calcExpression = result.toString();
     document.getElementById("calc-display").textContent = calcExpression;
   } catch {
@@ -274,8 +291,21 @@ function calculate() {
     calcExpression = "";
   }
 }
-document.addEventListener("keydown",function(event){const modal=document.getElementById("calcModal"); if(modal.style.display!=="flex") return; const key=event.key; if(!isNaN(key)||"+-*/.".includes(key)) appendCalc(key); else if(key==="Enter"||key==="="){event.preventDefault();calculate();} else if(key==="Backspace") calcExpression=calcExpression.slice(0,-1)||"0"; else if(key==="Escape") clearCalc(); document.getElementById("calc-display").textContent=calcExpression;});
-document.getElementById("calcModal").addEventListener("click",function(e){if(e.target.id==="calcModal") toggleCalc();});
+
+document.addEventListener("keydown", function(event){
+  const modal=document.getElementById("calcModal"); 
+  if(modal.style.display!=="flex") return; 
+  const key=event.key; 
+  if(!isNaN(key)||"+-*/.".includes(key)) appendCalc(key); 
+  else if(key==="Enter"||key==="="){ event.preventDefault(); calculate(); } 
+  else if(key==="Backspace") calcExpression=calcExpression.slice(0,-1)||"0"; 
+  else if(key==="Escape") clearCalc(); 
+  document.getElementById("calc-display").textContent=calcExpression;
+});
+
+document.getElementById("calcModal").addEventListener("click", function(e){
+  if(e.target.id==="calcModal") toggleCalc();
+});
 
 // Calendario
 let currentDate=new Date();
