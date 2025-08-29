@@ -103,57 +103,86 @@ h2 { font-size: 2.8em; font-weight: 500; margin-bottom: 30px; text-align: center
 .calc-buttons .equal { background: #9b59b6; }
 .calc-buttons .clear { background: #e74c3c; }
 
-/* Calendario flotante mejorado */
+/* Calendario flotante integrado */
 .calendar-modal {
-  display: none;
+  display: flex;
+  flex-direction: column;
+  background: #3a0d57;
+  border-radius: 15px;
+  padding: 20px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #3a0d57;
-  border-radius: 12px;
-  padding: 15px;
-  width: 480px;
-  max-width: 95%;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
   z-index: 2000;
+  display: none;
 }
 
-.calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; color: #fff; font-weight: 600; }
-.calendar-header button { background: #6c3483; color: #fff; border:none; padding:5px 10px; border-radius:5px; cursor:pointer;}
-.calendar-header button:hover{background:#8e44ad;}
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
 
-.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
-.calendar-weekday { text-align: center; font-weight: 600; color: #fff; font-size: 0.8rem; }
+.calendar-header button {
+  background: #6c3483;
+  color: #fff;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.calendar-header button:hover { background: #8e44ad; }
+
+#monthYear { font-size: 1.4rem; }
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+
+.calendar-weekday {
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #fff;
+}
 
 .calendar-date {
   background: #6c3483;
-  padding: 8px;
-  border-radius: 6px;
+  border-radius: 8px;
   min-height: 100px;
-  cursor: pointer;
   display: flex;
   flex-direction: column;
+  padding: 5px;
+  cursor: pointer;
+  overflow: hidden;
 }
 
 .calendar-date:hover { background: #8e44ad; }
-.calendar-date div:first-child { font-weight:600; }
+.calendar-date div:first-child { font-weight: bold; margin-bottom: 3px; }
 
 .note-text {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: #fff;
-  background: rgba(255, 235, 59, 0.2);
-  margin-top: 4px;
-  padding: 2px 4px;
-  border-radius: 4px;
-  word-break: break-word;
-  flex: 1;
+  background: rgba(255, 235, 59, 0.25);
+  border-radius: 5px;
+  padding: 3px;
   overflow-y: auto;
+  flex: 1;
+  word-break: break-word;
 }
 
-/* Ajuste móvil */
 @media(max-width:500px){
-  .note-text { font-size: 1rem; }
+  .calendar-date { min-height: 80px; }
+  .note-text { font-size: 0.95rem; }
 }
 </style>
 </head>
@@ -221,14 +250,12 @@ h2 { font-size: 2.8em; font-weight: 500; margin-bottom: 30px; text-align: center
 
 <!-- Calendario -->
 <div class="calendar-modal" id="calendarModal">
-  <div class="calendar-container">
-    <div class="calendar-header">
-      <button onclick="prevMonth()">«</button>
-      <div id="monthYear"></div>
-      <button onclick="nextMonth()">»</button>
-    </div>
-    <div class="calendar-grid" id="calendarGrid"></div>
+  <div class="calendar-header">
+    <button onclick="prevMonth()">«</button>
+    <div id="monthYear"></div>
+    <button onclick="nextMonth()">»</button>
   </div>
+  <div class="calendar-grid" id="calendarGrid"></div>
 </div>
 
 <script>
@@ -272,15 +299,7 @@ function renderCalendar(){
 
     const noteDiv=document.createElement("div"); noteDiv.className="note-text"; noteDiv.textContent=notes[key]||""; dateDiv.appendChild(noteDiv);
 
-    dateDiv.addEventListener("click",()=>{
-      const note=prompt("Nota para "+key,notes[key]||"");
-      if(note!==null){ 
-        if(note.trim()==="") delete notes[key]; 
-        else notes[key]=note; 
-        localStorage.setItem("calendarNotes",JSON.stringify(notes)); 
-        renderCalendar(); 
-      }
-    });
+    dateDiv.addEventListener("click",()=>{ const note=prompt("Nota para "+key,notes[key]||""); if(note!==null){ if(note.trim()==="") delete notes[key]; else notes[key]=note; localStorage.setItem("calendarNotes",JSON.stringify(notes)); renderCalendar(); }});
 
     calendarGrid.appendChild(dateDiv);
   }
