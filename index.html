@@ -20,154 +20,82 @@ body {
   min-height: 100vh;
 }
 
-h1 {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-weight: 600;
-  font-size: 2.2em;
-  margin-bottom: 20px;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.2);
-}
-
+h1 { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 2.2em; margin-bottom: 20px; text-shadow: 0 2px 6px rgba(0,0,0,0.2); }
 h1 img { width: 300px; height: auto; }
+h2 { font-size: 2.8em; font-weight: 500; margin-bottom: 30px; text-align: center; color: #ffffff; text-shadow: 1px 2px 4px rgba(0,0,0,0.3); }
 
-h2 {
-  font-size: 2.8em; 
-  font-weight: 500;
-  margin-bottom: 30px;
-  text-align: center;
-  color: #ffffff;
-  text-shadow: 1px 2px 4px rgba(0,0,0,0.3);
-}
-
-.btn-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-}
+.btn-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
 
 .btn {
-  padding: 22px 48px;
-  font-size: 1.3em;
-  font-weight: 600;
-  color: #fff;
-  border: none;
-  border-radius: 16px;
-  cursor: pointer;
+  padding: 22px 48px; font-size: 1.3em; font-weight: 600; color: #fff;
+  border: none; border-radius: 16px; cursor: pointer;
   background-size: 200% 100%;
   transition: all 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
   box-shadow: 0 6px 16px rgba(0,0,0,0.3);
-  text-align: center;
-  position: relative;
-  overflow: hidden;
+  text-align: center; position: relative; overflow: hidden;
 }
-
 .btn::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: rgba(255,255,255,0.2);
-  transform: rotate(45deg) translate(-100%, -100%);
+  content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+  background: rgba(255,255,255,0.2); transform: rotate(45deg) translate(-100%, -100%);
   transition: all 0.5s ease;
 }
-
-.btn:hover::after {
-  transform: rotate(45deg) translate(100%, 100%);
-}
-
-.btn:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 28px rgba(255,182,193,0.6);
-  background-position: right center;
-}
-
+.btn:hover::after { transform: rotate(45deg) translate(100%, 100%); }
+.btn:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(255,182,193,0.6); background-position: right center; }
 .btn-blue { background-image: linear-gradient(90deg,#3498db,#1abc9c); }
 .btn-red { background-image: linear-gradient(90deg,#e74c3c,#ff7675); }
 .btn-green { background-image: linear-gradient(90deg,#2ecc71,#27ae60); }
 .btn-orange { background-image: linear-gradient(90deg,#f1c40f,#f39c12); }
 .btn-purple { background-image: linear-gradient(90deg,#9b59b6,#8e44ad); }
 
-@media(max-width:900px){
-  .btn-container { flex-direction: column; align-items:center; }
-  .btn { width:80%; text-align:center; }
-}
+@media(max-width:900px){ .btn-container { flex-direction: column; align-items:center; } .btn { width:80%; text-align:center; } }
 
 /* Botones flotantes */
 .floating-btn {
-  position: fixed;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  z-index: 1000;
+  position: fixed; width: 60px; height: 60px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3); cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease; z-index: 1000;
 }
-
 .floating-btn img, .floating-btn svg { width: 28px; height: 28px; }
-
 .whatsapp-btn { right: 20px; background-color: #25D366; bottom: 20px; animation: bounce 2s infinite; }
 .gmail-btn { right: 100px; background-color: #D44638; bottom: 20px; animation: bounce 2s infinite 0.2s; }
 .calc-btn { right: 180px; background-color: #8e44ad; bottom: 20px; animation: bounce 2s infinite 0.4s; }
+.calendar-btn { right: 260px; background-color: #6a1b9a; bottom: 20px; animation: bounce 2s infinite 0.6s; }
 
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
+@keyframes bounce { 0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);} }
 
 /* Calculadora flotante */
-.calc-modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.5);
-  justify-content: center;
-  align-items: center;
-  z-index: 2000;
+.calc-modal, .calendar-modal {
+  display: none; position: fixed; inset:0;
+  background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index:2000;
 }
-.calc-container {
-  background: #2c003e;
-  color: white;
-  padding: 20px;
-  border-radius: 12px;
-  width: 300px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+.calc-container, .calendar-container {
+  background: #2c003e; color: white; padding: 20px; border-radius: 12px; width: 320px; box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
-.calc-display {
-  background: #3a0d57;
-  color: #fff;
-  font-size: 2rem;
-  padding: 10px;
-  border-radius: 8px;
-  margin-bottom: 10px;
-  text-align: right;
-  font-family: monospace;
+.calc-display { background:#3a0d57; color:#fff; font-size:2rem; padding:10px; border-radius:8px; margin-bottom:10px; text-align:right; font-family:monospace; }
+.calc-buttons { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+.calc-buttons button { padding:15px; font-size:1.2rem; border:none; border-radius:8px; background:#6c3483; color:white; cursor:pointer; }
+.calc-buttons button:hover { background:#8e44ad; }
+.calc-buttons .equal { background:#9b59b6; }
+.calc-buttons .clear { background:#e74c3c; }
+
+/* Calendario moderno */
+.calendar-container {
+  display: flex; flex-direction: column; align-items: center; text-align:center;
 }
-.calc-buttons {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
+.calendar-header {
+  display:flex; justify-content: space-between; align-items:center; width:100%; margin-bottom:10px;
 }
-.calc-buttons button {
-  padding: 15px;
-  font-size: 1.2rem;
-  border: none;
-  border-radius: 8px;
-  background: #6c3483;
-  color: white;
-  cursor: pointer;
+.calendar-header button {
+  background:#6c3483; border:none; color:white; font-size:1.2rem; padding:5px 10px; border-radius:6px; cursor:pointer;
 }
-.calc-buttons button:hover { background: #8e44ad; }
-.calc-buttons .equal { background: #9b59b6; }
-.calc-buttons .clear { background: #e74c3c; }
+.calendar-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+.calendar-day, .calendar-date {
+  padding:10px; border-radius:6px;
+}
+.calendar-day { background:#3a0d57; font-weight:600; }
+.calendar-date { background:#6c3483; cursor:pointer; }
+.calendar-date:hover, .calendar-date.selected { background:#8e44ad; }
 </style>
 </head>
 <body>
@@ -201,6 +129,12 @@ h2 {
   </svg>
 </div>
 
+<div class="floating-btn calendar-btn" onclick="toggleCalendar()">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
+    <path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V9h14v11z"/>
+  </svg>
+</div>
+
 <!-- Modal calculadora -->
 <div class="calc-modal" id="calcModal">
   <div class="calc-container">
@@ -227,50 +161,56 @@ h2 {
   </div>
 </div>
 
+<!-- Modal calendario moderno -->
+<div class="calendar-modal" id="calendarModal">
+  <div class="calendar-container">
+    <div class="calendar-header">
+      <button onclick="prevMonth()">&lt;</button>
+      <span id="monthYear"></span>
+      <button onclick="nextMonth()">&gt;</button>
+    </div>
+    <div class="calendar-grid" id="calendarGrid"></div>
+  </div>
+</div>
+
 <script>
+// Calculadora
 let calcExpression = "";
+function toggleCalc() { const modal=document.getElementById("calcModal"); modal.style.display=(modal.style.display==="flex")?"none":"flex"; }
+function appendCalc(value){ if(calcExpression==="0")calcExpression=""; calcExpression+=value; document.getElementById("calc-display").textContent=calcExpression;}
+function clearCalc(){ calcExpression=""; document.getElementById("calc-display").textContent="0";}
+function calculate(){ try{ calcExpression=eval(calcExpression).toString(); document.getElementById("calc-display").textContent=calcExpression;}catch{ document.getElementById("calc-display").textContent="Error"; calcExpression="";}}
+document.addEventListener("keydown",function(e){ const modal=document.getElementById("calcModal"); if(modal.style.display!=="flex")return; const key=e.key; if(!isNaN(key)||"+-*/.".includes(key)) appendCalc(key); else if(key==="Enter"||key==="="){ e.preventDefault(); calculate(); } else if(key==="Backspace") calcExpression=calcExpression.slice(0,-1)||"0"; else if(key==="Escape") clearCalc(); document.getElementById("calc-display").textContent=calcExpression;});
+document.getElementById("calcModal").addEventListener("click", function(e){ if(e.target.id==="calcModal") toggleCalc(); });
 
-function toggleCalc() {
-  const modal = document.getElementById("calcModal");
-  modal.style.display = (modal.style.display === "flex") ? "none" : "flex";
-}
+// Calendario moderno
+let currentDate = new Date();
+let selectedDate = null;
 
-function appendCalc(value) {
-  if (calcExpression === "0") calcExpression = "";
-  calcExpression += value;
-  document.getElementById("calc-display").textContent = calcExpression;
-}
+function toggleCalendar(){ const modal=document.getElementById("calendarModal"); modal.style.display=(modal.style.display==="flex")?"none":"flex"; renderCalendar(); }
+document.getElementById("calendarModal").addEventListener("click", function(e){ if(e.target.id==="calendarModal") toggleCalendar(); });
 
-function clearCalc() {
-  calcExpression = "";
-  document.getElementById("calc-display").textContent = "0";
-}
-
-function calculate() {
-  try {
-    calcExpression = eval(calcExpression).toString();
-    document.getElementById("calc-display").textContent = calcExpression;
-  } catch {
-    document.getElementById("calc-display").textContent = "Error";
-    calcExpression = "";
+function renderCalendar(){
+  const monthNames=["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+  const monthYear = document.getElementById("monthYear");
+  monthYear.textContent = monthNames[currentDate.getMonth()] + " " + currentDate.getFullYear();
+  const grid = document.getElementById("calendarGrid");
+  grid.innerHTML = "";
+  const days = ["L","M","X","J","V","S","D"];
+  days.forEach(d=>{ const dayDiv=document.createElement("div"); dayDiv.textContent=d; dayDiv.className="calendar-day"; grid.appendChild(dayDiv); });
+  const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
+  const totalDays = new Date(currentDate.getFullYear(), currentDate.getMonth()+1,0).getDate();
+  for(let i=0;i<(firstDay+6)%7;i++){ const empty=document.createElement("div"); grid.appendChild(empty);}
+  for(let i=1;i<=totalDays;i++){
+    const dateDiv=document.createElement("div"); dateDiv.textContent=i; dateDiv.className="calendar-date";
+    if(selectedDate && selectedDate.getDate()===i && selectedDate.getMonth()===currentDate.getMonth() && selectedDate.getFullYear()===currentDate.getFullYear()){ dateDiv.classList.add("selected"); }
+    dateDiv.addEventListener("click", ()=>{ selectedDate=new Date(currentDate.getFullYear(),currentDate.getMonth(),i); renderCalendar(); });
+    grid.appendChild(dateDiv);
   }
 }
 
-document.addEventListener("keydown", function(event) {
-  const modal = document.getElementById("calcModal");
-  if (modal.style.display !== "flex") return;
-  const key = event.key;
-  if (!isNaN(key) || "+-*/.".includes(key)) appendCalc(key);
-  else if (key === "Enter" || key === "=") { event.preventDefault(); calculate(); }
-  else if (key === "Backspace") calcExpression = calcExpression.slice(0,-1) || "0";
-  else if (key === "Escape") clearCalc();
-  document.getElementById("calc-display").textContent = calcExpression;
-});
-
-document.getElementById("calcModal").addEventListener("click", function(e){
-  if(e.target.id==="calcModal") toggleCalc();
-});
+function prevMonth(){ currentDate.setMonth(currentDate.getMonth()-1); renderCalendar(); }
+function nextMonth(){ currentDate.setMonth(currentDate.getMonth()+1); renderCalendar(); }
 </script>
-
 </body>
 </html>
