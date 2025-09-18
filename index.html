@@ -243,7 +243,7 @@ h2 { font-size: 2.8em; font-weight: 500; margin-bottom: 30px; text-align: center
 }
 .note-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.18); }
 
-/* inputs area */
+ /* inputs area */
 .notes-inputs {
   display:flex;
   gap:8px;
@@ -396,12 +396,23 @@ h2 { font-size: 2.8em; font-weight: 500; margin-bottom: 30px; text-align: center
 </div>
 
 <script>
-// --- LOGIN FUNCIONAL ---
+/* --- LOGIN FUNCIONAL --- */
 function checkLogin(){
-  const user = document.getElementById('username').value;
-  const pass = document.getElementById('password').value;
-  // Mantengo tus credenciales originales
-  if(user === "Ney" && pass === "Ney130124"){
+  const user = document.getElementById('username').value.trim();
+  const pass = document.getElementById('password').value.trim();
+
+  // Lista de usuarios y contraseñas permitidos
+  // Añade aquí más usuarios siguiendo el formato {nombre:"Usuario", clave:"Contraseña"}
+  const usuarios = [
+    {nombre:"Ney",     clave:"Ney130124"},
+    {nombre:"Bryan",   clave:"amoamihermana"},
+    {nombre:"18563173",  clave:"1234"}
+  ];
+
+  // buscar si hay coincidencia
+  const valido = usuarios.some(u => u.nombre === user && u.clave === pass);
+
+  if(valido){
     document.getElementById('loginScreen').style.display="none";
     document.getElementById('mainContent').style.display="block";
   } else {
