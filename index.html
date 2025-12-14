@@ -258,6 +258,24 @@ h2 { font-size: 2.8em; font-weight: 500; margin-bottom: 30px; text-align: center
 .notes-inputs button.add-btn { background:#333; color:#fff; border:none; padding:8px 12px; border-radius:8px; cursor:pointer; }
 .notes-inputs button.add-btn:hover { background:#555; }
 
+/* --- PLATAFORMA DE PROYECTOS --- */
+.projects-box{
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  padding: 30px;
+  margin: 40px auto;
+  max-width: 900px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  text-align: center;
+}
+
+.projects-box h3{
+  font-size: 2em;
+  margin-bottom: 25px;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
 </style>
 </head>
 <body>
@@ -290,6 +308,38 @@ h2 { font-size: 2.8em; font-weight: 500; margin-bottom: 30px; text-align: center
   <button class="btn btn-red" onclick="window.open('https://www.registrodeempresasysociedades.cl/','_blank')">Empresa en un día</button>
   <button class="btn btn-blue" onclick="window.open('https://www.mercadopublico.cl/Home/','_blank')">Mercado Publico</button>
 </div>
+
+<!-- PLATAFORMA DE PROYECTOS -->
+<div class="projects-box">
+
+  <h3>Plataforma de Proyectos</h3>
+
+  <div class="btn-container">
+    <button class="btn btn-blue" onclick="window.open('https://fondos.gob.cl/?utm_source=chatgpt.com','_blank')">
+     Fondo.Gob
+    </button>
+
+    <button class="btn btn-green" onclick="window.open('https://www.corfo.gob.cl/sites/cpp/','_blank')">
+     Corfo.Gob
+    </button>
+
+    <button class="btn btn-orange" onclick="window.open('https://startupchile.org/','_blank')">
+      Startupchile
+    </button>
+
+    <button class="btn btn-red" onclick="window.open('https://www.sercotec.cl/?utm_source=chatgpt.com','_blank')">
+      Sercotec
+    </button>
+
+    <button class="btn btn-purple" onclick="window.open('https://miportalemprendimiento.gob.cl/login','_blank')">
+      Miportalemprendimiento
+    </button>
+
+  </div>
+
+</div>
+
+
 
 <!-- Botones flotantes -->
 <div class="floating-btn whatsapp-btn" onclick="window.open('https://web.whatsapp.com/send?phone=569XXXXXXXX&text=Hola!','_blank')">
@@ -405,7 +455,7 @@ function checkLogin(){
   // Añade aquí más usuarios siguiendo el formato {nombre:"Usuario", clave:"Contraseña"}
   const usuarios = [
     {nombre:"Ney",     clave:"Ney130124"},
-    {nombre:"Bryan",   clave:"123"},
+    {nombre:"Bryan",   clave:"amoamihermana"},
     {nombre:"18563173",  clave:"1234"}
   ];
 
@@ -626,4 +676,3 @@ document.addEventListener('keydown', function(e){
 
 </body>
 </html>
-
