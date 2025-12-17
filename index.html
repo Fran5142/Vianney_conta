@@ -304,9 +304,9 @@ h2 { font-size: 2.8em; font-weight: 500; margin-bottom: 30px; text-align: center
   <button class="btn btn-red" onclick="window.open('https://www.previred.com/wPortal/login/login.jsp','_blank')">Previred</button>
   <button class="btn btn-green" onclick="window.open('https://midt.dirtrab.cl/welcome','_blank')">DT</button>
   <button class="btn btn-orange" onclick="window.open('https://zeusr.sii.cl/AUT2000/InicioAutenticacion/IngresoRutClave.html?https://misiir.sii.cl/cgi_misii/siihome.cgi/','_blank')">SII</button>
-  <button class="btn btn-purple" onclick="window.open('https://mascontable.maserp.cl/','_blank')">Mascontable</button>
   <button class="btn btn-red" onclick="window.open('https://www.registrodeempresasysociedades.cl/','_blank')">Empresa en un día</button>
   <button class="btn btn-blue" onclick="window.open('https://www.mercadopublico.cl/Home/','_blank')">Mercado Publico</button>
+  <button class="btn btn-purple" onclick="window.open('https://mascontable.maserp.cl/','_blank')"> Alternativa de Software Contable</button>
 </div>
 
 <!-- PLATAFORMA DE PROYECTOS -->
@@ -337,6 +337,38 @@ h2 { font-size: 2.8em; font-weight: 500; margin-bottom: 30px; text-align: center
 
   </div>
 
+<!-- PLATAFORMA DE BANCOS -->
+
+<div class="projects-box" style="background: rgba(0,0,0,0.25);">
+  <h3>Bancos y Pagos</h3>
+  <div class="btn-container">
+    <button class="btn btn-red" onclick="window.open('https://app.santander.cl/UI.Web.HB/Private_new/frame/#/public/login?returnUrl=%2Fprivate%2Fmain','_blank')">
+      Santander
+    </button>
+    
+    <button class="btn btn-blue" onclick="window.open('https://www.bancoestado.cl','_blank')">
+      BancoEstado
+    </button>
+
+    <button class="btn btn-blue" style="background-image: linear-gradient(90deg,#002464,#0050ef);" onclick="window.open('https://ww3.bancochile.cl','_blank')">
+      Banco de Chile
+    </button>
+
+    <button class="btn btn-orange" onclick="window.open('https://www.itau.cl','_blank')">
+      Itaú
+    </button>
+
+    <button class="btn btn-green" style="background-image: linear-gradient(90deg,#60b524,#2e7d32);" onclick="window.open('https://www.bci.cl/personas','_blank')">
+      BCI
+    </button>
+
+    <button class="btn btn-purple" style="background-image: linear-gradient(90deg,#673ab7,#e91e63);" onclick="window.open('https://www.scotiabank.cl','_blank')">
+      Scotiabank
+    </button>
+  </div>
+</div>
+
+<!-- FIN DE PLATAFORMA DE BANCOS -->
 </div>
 
 
@@ -445,7 +477,18 @@ h2 { font-size: 2.8em; font-weight: 500; margin-bottom: 30px; text-align: center
   </div>
 </div>
 
+<div class="floating-btn bank-btn" onclick="scrollToBancos()" style="right: 420px; background-color: #34495e; bottom: 20px; animation: bounce 2s infinite 1.2s;">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="28" height="28">
+    <path d="M11.5 1L2 6v2h19V6l-9.5-5zM2 22h19v-3H2v3zm4-13v7h3V9H6zm5 0v7h3V9h-3zm5 0v7h3V9h-3z"/>
+  </svg>
+</div>
+
 <script>
+function scrollToBancos() {
+  const seccionBancos = document.querySelector('.projects-box:last-of-type');
+  seccionBancos.scrollIntoView({ behavior: 'smooth' });
+}
+
 /* --- LOGIN FUNCIONAL --- */
 function checkLogin(){
   const user = document.getElementById('username').value.trim();
@@ -457,6 +500,7 @@ function checkLogin(){
     {nombre:"Ney",     clave:"Ney130124"},
     {nombre:"Bryan",   clave:"amoamihermana"},
     {nombre:"18563173",  clave:"1234"}
+    {nombre:"Corfo",  clave:"1234"}
   ];
 
   // buscar si hay coincidencia
