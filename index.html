@@ -11,8 +11,10 @@ body {
   font-family: 'Inter', sans-serif;
   margin: 0;
   padding: 40px 20px;
-  background: linear-gradient(180deg, #f8c3df, #e07ac3, #c44bb1);
-  color: #fff;
+  /* Degradado Verde Menta suave y profesional */
+  background: linear-gradient(135deg, #a7f3d0 0%, #7dd3fc 100%);
+  background-attachment: fixed;
+  color: #1e293b; /* Texto gris oscuro para que sea más fácil de leer */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -33,13 +35,15 @@ body {
 }
 
 #loginBox {
-  background: linear-gradient(135deg,#f8c3df,#e07ac3,#c44bb1);
+  background: rgba(255, 255, 255, 0.7); /* Blanco traslúcido */
+  backdrop-filter: blur(15px);
   padding: 40px;
-  border-radius: 16px;
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,0.5);
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
 }
 
 #loginBox img {
@@ -48,29 +52,66 @@ body {
 }
 
 #loginBox input {
-  width: 250px;
-  padding: 12px;
-  margin: 8px 0;
+  width: 280px;
+  padding: 14px 18px;
+  margin: 10px 0;
   border-radius: 12px;
-  border: none;
+  /* Borde suave que combina con el verde menta */
+  border: 2px solid #a7f3d0; 
+  background: rgba(255, 255, 255, 0.9);
   font-size: 1em;
+  font-family: 'Inter', sans-serif;
+  color: #1e293b;
+  outline: none;
+  transition: all 0.3s ease;
+  box-sizing: border-box; /* Para que el padding no ensanche el cuadro */
+}
+
+/* Ajuste para que el texto de la clave no se encime con el ojo */
+#loginBox input[type="password"] {
+    padding-right: 45px !important; 
+}
+
+#togglePassword:hover {
+    color: #a855f7; /* Cambia a morado al pasar el mouse */
+}
+
+
+
+
+
+/* Efecto cuando haces clic para escribir */
+#loginBox input:focus {
+  border-color: #10b981; /* Verde más intenso */
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
+  transform: scale(1.02);
 }
 
 #loginBox button {
-  margin-top: 12px;
-  padding: 12px 28px;
+  margin-top: 15px;
+  width: 280px; /* Del mismo ancho que los inputs */
+  padding: 14px;
   border: none;
   border-radius: 12px;
   font-weight: 600;
   color: #fff;
-  font-size: 1em;
-  background-image: linear-gradient(90deg,#3498db,#1abc9c);
+  font-size: 1.1em;
+  /* Degradado morado que hace juego con tu logo */
+  background: linear-gradient(90deg, #a855f7, #7e22ce);
   cursor: pointer;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(126, 34, 206, 0.3);
 }
+
 #loginBox button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(255,182,193,0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(126, 34, 206, 0.4);
+  filter: brightness(1.1);
+}
+
+#loginBox input::placeholder {
+  color: #94a3b8;
+  font-weight: 400;
 }
 
 /* --- RESTO DE TU ESTILO ORIGINAL --- */
@@ -86,7 +127,14 @@ h1 {
 }
 h1 img { width: 300px; height: auto; }
 
-h2 { font-size: 2.8em; font-weight: 500; margin-bottom: 30px; text-align: center; color: #ffffff; text-shadow: 1px 2px 4px rgba(0,0,0,0.3); }
+h2 { 
+  font-size: 2.2em; 
+  font-weight: 600; 
+  margin-bottom: 30px; 
+  text-align: center; 
+  color: #065f46; /* Verde bosque profundo */
+  text-shadow: none; 
+}
 
 .btn-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
 
@@ -259,42 +307,40 @@ h2 { font-size: 2.8em; font-weight: 500; margin-bottom: 30px; text-align: center
 .notes-inputs button.add-btn:hover { background:#555; }
 
 /* --- PLATAFORMA DE PROYECTOS --- */
-.projects-box{
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(8px);
+.projects-box {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
   border-radius: 20px;
   padding: 30px;
   margin: 40px auto;
   max-width: 900px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
   text-align: center;
 }
 
-.projects-box h3{
-  font-size: 2em;
-  margin-bottom: 25px;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.3);
+.projects-box h3 {
+  color: #065f46; /* Un verde oscuro elegante para los títulos */
 }
 
 /* Estilo Moderno para Logos de Bancos */
 .bank-card {
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 16px;
-    padding: 15px;
-    width: 140px;
-    height: 80px;
+    background: rgba(255, 255, 255, 0.95); /* Blanco casi puro para que resalte el logo */
+    border-radius: 12px;
+    padding: 10px;
+    width: 180px; /* Tamaño intermedio ideal */
+    height: 90px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
 }
 
 .bank-card:hover {
-    transform: translateY(-10px) scale(1.05);
-    background: #fff;
-    box-shadow: 0 12px 20px rgba(0,0,0,0.2);
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(59, 130, 246, 0.3); /* Brillo azul al pasar el mouse */
 }
 
 .bank-card img {
@@ -325,8 +371,19 @@ h2 { font-size: 2.8em; font-weight: 500; margin-bottom: 30px; text-align: center
 <div id="loginScreen">
   <div id="loginBox">
     <img src="https://archive.org/download/vianney-conta-1/VIANNEY%20CONTA1.png" alt="Logo">
+    
     <input type="text" id="username" placeholder="Usuario">
-    <input type="password" id="password" placeholder="Contraseña">
+    
+    <div style="position: relative; width: 100%;">
+      <input type="password" id="password" placeholder="Contraseña" style="width: 100%;">
+      <span id="togglePassword" onclick="togglePasswordVisibility()" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #64748b;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+        </svg>
+      </span>
+    </div>
+
     <button onclick="checkLogin()">Ingresar</button>
   </div>
 </div>
