@@ -276,6 +276,47 @@ h2 { font-size: 2.8em; font-weight: 500; margin-bottom: 30px; text-align: center
   text-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 
+/* Estilo Moderno para Logos de Bancos */
+.bank-card {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 16px;
+    padding: 15px;
+    width: 140px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.bank-card:hover {
+    transform: translateY(-10px) scale(1.05);
+    background: #fff;
+    box-shadow: 0 12px 20px rgba(0,0,0,0.2);
+}
+
+.bank-card img {
+    max-width: 90%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: grayscale(20%);
+    transition: filter 0.3s ease;
+}
+
+.bank-card:hover img {
+    filter: grayscale(0%);
+}
+
+.bank-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    justify-items: center;
+    padding: 10px;
+}
+
 </style>
 </head>
 <body>
@@ -339,33 +380,35 @@ h2 { font-size: 2.8em; font-weight: 500; margin-bottom: 30px; text-align: center
 
 <!-- PLATAFORMA DE BANCOS -->
 
-<div class="projects-box" style="background: rgba(0,0,0,0.25);">
-  <h3>Bancos y Pagos</h3>
-  <div class="btn-container">
-    <button class="btn btn-red" onclick="window.open('https://app.santander.cl/UI.Web.HB/Private_new/frame/#/public/login?returnUrl=%2Fprivate%2Fmain','_blank')">
-      Santander
-    </button>
-    
-    <button class="btn btn-blue" onclick="window.open('https://www.bancoestado.cl','_blank')">
-      BancoEstado
-    </button>
+<div class="projects-box" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);">
+    <h3>Bancos y Pagos</h3>
+    <div class="bank-grid">
+        
+        <div class="bank-card" onclick="window.open('https://app.santander.cl/UI.Web.HB/Private_new/frame/#/public/login','_blank')">
+            <img src="https://logos-marcas.com/wp-content/uploads/2020/11/Banco-Santander-Logotipo-1989-1999.jpg" alt="Santander">
+        </div>
 
-    <button class="btn btn-blue" style="background-image: linear-gradient(90deg,#002464,#0050ef);" onclick="window.open('https://ww3.bancochile.cl','_blank')">
-      Banco de Chile
-    </button>
+        <div class="bank-card" onclick="window.open('https://www.bancoestado.cl','_blank')">
+            <img src="https://estadodemicuenta.com/wp-content/uploads/2021/01/Banco-Estado-1000x564.jpg" alt="BancoEstado">
+        </div>
 
-    <button class="btn btn-orange" onclick="window.open('https://www.itau.cl','_blank')">
-      Itaú
-    </button>
+        <div class="bank-card" onclick="window.open('https://ww3.bancochile.cl','_blank')">
+            <img src="https://www.sas.com/es_es/customers/local/banco-de-chile/_jcr_content/par02/image_6a85.img.png/1457724805851.png" alt="Banco de Chile">
+        </div>
 
-    <button class="btn btn-green" style="background-image: linear-gradient(90deg,#60b524,#2e7d32);" onclick="window.open('https://www.bci.cl/personas','_blank')">
-      BCI
-    </button>
+        <div class="bank-card" onclick="window.open('https://www.itau.cl','_blank')">
+            <img src="https://logos-world.net/wp-content/uploads/2024/03/Banco-Itau-Logo-New.png" alt="Itaú">
+        </div>
 
-    <button class="btn btn-purple" style="background-image: linear-gradient(90deg,#673ab7,#e91e63);" onclick="window.open('https://www.scotiabank.cl','_blank')">
-      Scotiabank
-    </button>
-  </div>
+        <div class="bank-card" onclick="window.open('https://www.bci.cl/personas','_blank')">
+            <img src="https://cdn3.bci.cl/uploads/2ab33fe4-2e4f-4124-b0ca-0a7d00b897ff/original/bci_logo.png" alt="BCI">
+        </div>
+
+        <div class="bank-card" onclick="window.open('https://www.scotiabank.cl','_blank')">
+            <img src="https://i2.wp.com/puntacana-bavaro.com/wp-content/uploads/2017/05/scotiabank_logo.jpg?fit=900%2C587&ssl=1" alt="Scotiabank">
+        </div>
+
+    </div>
 </div>
 
 <!-- FIN DE PLATAFORMA DE BANCOS -->
@@ -720,5 +763,3 @@ document.addEventListener('keydown', function(e){
 
 </body>
 </html>
-
-
