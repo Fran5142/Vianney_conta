@@ -7,14 +7,79 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
+/* --- ESTILOS DE LOGIN Y CARGA --- */
+#loginOverlay, #loadingScreen {
+    position: fixed;
+    inset: 0;
+    background-color: #fff1f2;
+    z-index: 5000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+}
+#loadingScreen { display: none; }
+
+.login-card {
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(15px);
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    width: 90%;
+    max-width: 380px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+}
+.login-card img, #loadingScreen img { width: 250px; margin-bottom: 25px; }
+
+.input-group { margin-bottom: 20px; text-align: left; }
+.input-group label { display: block; font-weight: 600; margin-bottom: 8px; color: #9f1239; }
+.input-group input {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(159, 18, 57, 0.2);
+    background: rgba(255, 255, 255, 0.2);
+    font-size: 1rem;
+    box-sizing: border-box;
+    outline: none;
+    backdrop-filter: blur(5px);
+    color: #1e293b;
+}
+
+.loader-bar {
+    width: 250px;
+    height: 8px;
+    background: rgba(159, 18, 57, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 20px;
+}
+.loader-progress {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #f43f5e, #fb7185);
+    transition: width 5s linear;
+}
+
+/* --- ESTILOS DEL CUERPO (TU DISEÑO) --- */
 body {
   font-family: 'Inter', sans-serif;
   margin: 0;
   padding: 40px 20px;
-  /* Degradado Verde Menta suave y profesional */
-  background: linear-gradient(135deg, #a7f3d0 0%, #7dd3fc 100%);
+  background-color: #fff1f2; 
+  background-image: 
+    url('https://ia803100.us.archive.org/32/items/chat-gpt-image-22-feb-2026-12-52-12-12-p.m./ChatGPT%20Image%2022%20feb%202026%2C%2012_52_12%20p.m..png'),
+    radial-gradient(at 0% 0%, rgba(255, 192, 203, 0.5) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(254, 205, 211, 0.5) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(244, 114, 182, 0.15) 0px, transparent 50%);
+  background-position: right center; 
+  background-size: 500px, cover; 
+  background-repeat: no-repeat;
   background-attachment: fixed;
-  color: #1e293b; /* Texto gris oscuro para que sea más fácil de leer */
+  color: #1e293b;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,620 +87,266 @@ body {
   min-height: 100vh;
 }
 
-/* --- LOGIN --- */
-#loginScreen {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.85);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 3000;
+#mainContent { 
+    display: none; 
+    width: 100%; 
+    max-width: 1200px; 
+    position: relative; 
+    z-index: 2; 
+    flex-direction: column; 
+    align-items: center; 
 }
 
-#loginBox {
-  background: rgba(255, 255, 255, 0.7); /* Blanco traslúcido */
-  backdrop-filter: blur(15px);
-  padding: 40px;
-  border-radius: 24px;
-  border: 1px solid rgba(255,255,255,0.5);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-}
+h1 { display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+h2 { font-size: 2.2em; font-weight: 600; margin-bottom: 30px; text-align: center; color: #9f1239; position: relative; z-index: 2; }
 
-#loginBox img {
-  width: 200px;
-  margin-bottom: 20px;
-}
-
-#loginBox input {
-  width: 280px;
-  padding: 14px 18px;
-  margin: 10px 0;
-  border-radius: 12px;
-  /* Borde suave que combina con el verde menta */
-  border: 2px solid #a7f3d0; 
-  background: rgba(255, 255, 255, 0.9);
-  font-size: 1em;
-  font-family: 'Inter', sans-serif;
-  color: #1e293b;
-  outline: none;
-  transition: all 0.3s ease;
-  box-sizing: border-box; /* Para que el padding no ensanche el cuadro */
-}
-
-/* Ajuste para que el texto de la clave no se encime con el ojo */
-#loginBox input[type="password"] {
-    padding-right: 45px !important; 
-}
-
-#togglePassword:hover {
-    color: #a855f7; /* Cambia a morado al pasar el mouse */
-}
-
-
-
-
-
-/* Efecto cuando haces clic para escribir */
-#loginBox input:focus {
-  border-color: #10b981; /* Verde más intenso */
-  box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
-  transform: scale(1.02);
-}
-
-#loginBox button {
-  margin-top: 15px;
-  width: 280px; /* Del mismo ancho que los inputs */
-  padding: 14px;
-  border: none;
-  border-radius: 12px;
-  font-weight: 600;
-  color: #fff;
-  font-size: 1.1em;
-  /* Degradado morado que hace juego con tu logo */
-  background: linear-gradient(90deg, #a855f7, #7e22ce);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(126, 34, 206, 0.3);
-}
-
-#loginBox button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(126, 34, 206, 0.4);
-  filter: brightness(1.1);
-}
-
-#loginBox input::placeholder {
-  color: #94a3b8;
-  font-weight: 400;
-}
-
-/* --- RESTO DE TU ESTILO ORIGINAL --- */
-h1 { 
-  display: flex; 
-  align-items: center; 
-  justify-content: center; /* <-- centrado horizontal */
-  gap: 10px; 
-  font-weight: 600; 
-  font-size: 2.2em; 
-  margin-bottom: 20px; 
-  text-shadow: 0 2px 6px rgba(0,0,0,0.2); 
-}
-h1 img { width: 300px; height: auto; }
-
-h2 { 
-  font-size: 2.2em; 
-  font-weight: 600; 
-  margin-bottom: 30px; 
-  text-align: center; 
-  color: #065f46; /* Verde bosque profundo */
-  text-shadow: none; 
-}
-
-.btn-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
-
+/* BOTONES PRINCIPALES */
+.btn-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; position: relative; z-index: 2; }
 .btn {
-  padding: 22px 48px;
-  font-size: 1.3em;
-  font-weight: 600;
-  color: #fff;
-  border: none;
-  border-radius: 16px;
-  cursor: pointer;
-  background-size: 200% 100%;
-  transition: all 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.3);
-  text-align: center;
-  position: relative;
-  overflow: hidden;
+  padding: 18px 40px; font-size: 1.1em; font-weight: 600; color: #fff; border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 12px; cursor: pointer; background-size: 200% 100%; transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1); box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; position: relative; overflow: hidden; text-transform: uppercase; letter-spacing: 1px; backdrop-filter: blur(5px);
 }
+.btn:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 10px 25px rgba(0,0,0,0.2); background-position: right center; border-color: rgba(255, 255, 255, 0.9); }
+.btn::before { content: ""; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent); transition: all 0.6s; }
+.btn:hover::before { left: 100%; }
+.btn-blue { background-image: linear-gradient(135deg,#3498db,#1abc9c); }
+.btn-red { background-image: linear-gradient(135deg,#e74c3c,#ff7675); }
+.btn-green { background-image: linear-gradient(135deg,#2ecc71,#27ae60); }
+.btn-orange { background-image: linear-gradient(135deg,#f1c40f,#f39c12); }
+.btn-purple { background-image: linear-gradient(135deg,#9b59b6,#8e44ad); }
 
-.btn::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: rgba(255,255,255,0.2);
-  transform: rotate(45deg) translate(-100%, -100%);
-  transition: all 0.5s ease;
-}
+/* CONTENEDORES */
+.projects-box { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.6); border-radius: 20px; padding: 30px; margin: 40px auto; max-width: 900px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); text-align: center; position: relative; z-index: 2; }
+.bank-grid { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; padding: 10px; }
+.bank-card { background: rgba(255, 255, 255, 0.95); border-radius: 12px; padding: 10px; width: 180px; height: 90px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+.bank-card img { max-width: 90%; max-height: 100%; object-fit: contain; }
 
-.btn:hover::after { transform: rotate(45deg) translate(100%, 100%); }
-.btn:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(255,182,193,0.6); background-position: right center; }
-
-.btn-blue { background-image: linear-gradient(90deg,#3498db,#1abc9c); }
-.btn-red { background-image: linear-gradient(90deg,#e74c3c,#ff7675); }
-.btn-green { background-image: linear-gradient(90deg,#2ecc71,#27ae60); }
-.btn-orange { background-image: linear-gradient(90deg,#f1c40f,#f39c12); }
-.btn-purple { background-image: linear-gradient(90deg,#9b59b6,#8e44ad); }
-
-@media(max-width:900px){
-  .btn-container { flex-direction: column; align-items:center; }
-  .btn { width:80%; text-align:center; }
-}
-
-/* Botones flotantes */
-.floating-btn { position: fixed; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.3); cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; z-index: 1000; }
-.floating-btn img, .floating-btn svg { width: 28px; height: 28px; }
-
-.whatsapp-btn { right: 20px; background-color: #25D366; bottom: 20px; animation: bounce 2s infinite; }
-.gmail-btn { right: 100px; background-color: #D44638; bottom: 20px; animation: bounce 2s infinite 0.2s; }
-.calc-btn { right: 180px; background-color: #8e44ad; bottom: 20px; animation: bounce 2s infinite 0.4s; }
-.calendar-btn { right: 260px; background-color: #9b59b6; bottom: 20px; animation: bounce 2s infinite 0.6s; }
-.notes-btn { right: 340px; background-color: #ff9800; bottom: 20px; animation: bounce 2s infinite 0.8s; }
-.timer-btn { left: 20px; background-color: #ff9800; bottom: 20px; animation: bounce 2s infinite 1s; }
-
-@keyframes bounce { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
-
-/* Calculadora flotante */
-.calc-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 2000; }
+/* MODALES */
+.calc-modal, .calendar-modal, .notes-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 3000; }
 .calc-container { background: #2c003e; color: white; padding: 20px; border-radius: 12px; width: 300px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
 .calc-display { background: #3a0d57; color: #fff; font-size: 2rem; padding: 10px; border-radius: 8px; margin-bottom: 10px; text-align: right; font-family: monospace; }
-.calc-history { background:#2c003e; font-size:1rem; color:#ffeb3b; text-align:right; margin-bottom:5px; min-height:20px; overflow-wrap: break-word; }
+.calc-history { background:#2c003e; font-size:1rem; color:#ffeb3b; text-align:right; margin-bottom:5px; min-height:20px; max-height: 80px; overflow-y: auto; }
 .calc-buttons { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; }
 .calc-buttons button { padding: 15px; font-size: 1.2rem; border: none; border-radius: 8px; background: #6c3483; color: white; cursor: pointer; }
-.calc-buttons button:hover { background: #8e44ad; }
 .calc-buttons .equal { background: #9b59b6; }
 .calc-buttons .clear { background: #e74c3c; }
 
-/* Calendario (overlay + contenido) */
-.calendar-modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.45);
-  justify-content: center;
-  align-items: center;
-  z-index: 2000;
+/* ICONOS FLOTANTES */
+.floating-btn { 
+    position: fixed; 
+    width: 60px; 
+    height: 60px; 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3); 
+    cursor: pointer; 
+    z-index: 2500; 
+    animation: bounce 2s infinite; 
 }
-.calendar-content {
-  background: #3a0d57;
-  border-radius: 15px;
-  padding: 20px;
-  width: 90%;
-  max-width: 600px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-  color: #fff;
-}
-.calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-weight: 600; font-size: 1.1rem; }
-.calendar-header .left { display:flex; gap:8px; align-items:center; }
-.calendar-header button { background: #6c3483; color: #fff; border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer; }
-.calendar-header button:hover { background: #8e44ad; }
-.calendar-close { background: #e74c3c; }
-#monthYear { font-size: 1.2rem; }
+.whatsapp-btn { right: 20px; background-color: #25D366; bottom: 20px; }
+.gmail-btn { right: 100px; background-color: #D44638; bottom: 20px; }
+.calc-btn { right: 180px; background-color: #8e44ad; bottom: 20px; }
+.calendar-btn { right: 260px; background-color: #9b59b6; bottom: 20px; }
+.notes-btn { right: 340px; background-color: #ff9800; bottom: 20px; }
+.timer-btn { left: 20px; background-color: #ff9800; bottom: 20px; }
+
+@keyframes bounce { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
+
+/* CALENDARIO Y NOTAS */
+.calendar-content { background: #3a0d57; border-radius: 15px; padding: 20px; width: 90%; max-width: 600px; color: #fff; }
 .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
-.calendar-weekday { text-align: center; font-weight: 600; font-size: 0.9rem; color: #fff; }
-.calendar-date { background: #6c3483; border-radius: 8px; min-height: 80px; display: flex; flex-direction: column; padding: 6px; cursor: pointer; overflow: hidden; }
-.calendar-date:hover { background: #8e44ad; }
-.calendar-date div:first-child { font-weight: bold; margin-bottom: 4px; }
-.note-text { font-size: 0.9rem; color: #fff; background: rgba(255, 235, 59, 0.15); border-radius: 5px; padding: 3px; overflow-y: auto; flex: 1; word-break: break-word; }
-
-@media(max-width:500px){ .calendar-date { min-height: 60px; } .note-text { font-size: 0.95rem; } }
-
-/* --- NOTAS FLOTANTES (overlay + contenido) --- */
-.notes-modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.45);
-  justify-content: center;
-  align-items: center;
-  z-index: 2100;
-}
-.notes-content {
-  background: rgba(255,255,255,0.96);
-  color: #000;
-  border-radius: 16px;
-  padding: 18px;
-  width: 90%;
-  max-width: 520px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-/* header inside notes */
-.notes-header {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.notes-header h3 { margin:0; font-size:1.1rem; color:#0d0d0d; }
-.notes-close { background:#e74c3c; color:#fff; border:none; border-radius:8px; padding:6px 10px; cursor:pointer; }
-
-/* list of notes */
-.notes-list {
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  max-height: 320px;
-  overflow-y:auto;
-}
-
-/* card style for each note */
-.note-card {
-  padding:12px;
-  border-radius:12px;
-  white-space: pre-wrap;
-  word-break: break-word;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  cursor:pointer;
-  transition: transform 0.15s, box-shadow 0.15s;
-}
-.note-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.18); }
-
- /* inputs area */
-.notes-inputs {
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  align-items:center;
-}
-.notes-inputs textarea { flex:1 1 220px; min-height:64px; padding:8px; border-radius:8px; border:1px solid #ccc; resize:vertical; font-family:inherit; }
+.calendar-date { background: #6c3483; border-radius: 8px; min-height: 80px; display: flex; flex-direction: column; padding: 6px; cursor: pointer; }
+.notes-content { background: rgba(255,255,255,0.96); border-radius: 16px; padding: 18px; width: 90%; max-width: 520px; }
+.note-card { padding:12px; border-radius:12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); cursor:pointer; margin-bottom: 8px; }
 .color-btn{ width:34px; height:34px; border-radius:8px; border:2px solid transparent; cursor:pointer; }
-.color-btn.selected { outline: 3px solid rgba(0,0,0,0.12); }
-
-/* add button */
-.notes-inputs button.add-btn { background:#333; color:#fff; border:none; padding:8px 12px; border-radius:8px; cursor:pointer; }
-.notes-inputs button.add-btn:hover { background:#555; }
-
-/* --- PLATAFORMA DE PROYECTOS --- */
-.projects-box {
-  background: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  border-radius: 20px;
-  padding: 30px;
-  margin: 40px auto;
-  max-width: 900px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-  text-align: center;
-}
-
-.projects-box h3 {
-  color: #065f46; /* Un verde oscuro elegante para los títulos */
-}
-
-/* Estilo Moderno para Logos de Bancos */
-.bank-card {
-    background: rgba(255, 255, 255, 0.95); /* Blanco casi puro para que resalte el logo */
-    border-radius: 12px;
-    padding: 10px;
-    width: 180px; /* Tamaño intermedio ideal */
-    height: 90px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-}
-
-.bank-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 30px rgba(59, 130, 246, 0.3); /* Brillo azul al pasar el mouse */
-}
-
-.bank-card img {
-    max-width: 90%;
-    max-height: 100%;
-    object-fit: contain;
-    filter: grayscale(20%);
-    transition: filter 0.3s ease;
-}
-
-.bank-card:hover img {
-    filter: grayscale(0%);
-}
-
-.bank-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 20px;
-    justify-items: center;
-    padding: 10px;
-}
-
 </style>
 </head>
-<body>
+<body id="pageBody">
 
-<!-- LOGIN -->
-<div id="loginScreen">
-  <div id="loginBox">
-    <img src="https://archive.org/download/vianney-conta-1/VIANNEY%20CONTA1.png" alt="Logo">
-    
-    <input type="text" id="username" placeholder="Usuario">
-    
-    <div style="position: relative; width: 100%;">
-      <input type="password" id="password" placeholder="Contraseña" style="width: 100%;">
-      <span id="togglePassword" onclick="togglePasswordVisibility()" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #64748b;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-          <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-        </svg>
-      </span>
+<div id="loginOverlay">
+  <div class="login-card">
+    <img src="https://ia601701.us.archive.org/14/items/whats-app-image-2025-08-24-at-17.32.37/VIANNEY%20CONTA.png" alt="Logo">
+    <div class="input-group">
+      <label>Usuario</label>
+      <input type="text" id="userInput" placeholder="Usuario" onkeydown="handleLoginKey(event)">
     </div>
-
-    <button onclick="checkLogin()">Ingresar</button>
+    <div class="input-group">
+      <label>Contraseña</label>
+      <input type="password" id="passInput" placeholder="Clave" onkeydown="handleLoginKey(event)">
+    </div>
+    <button onclick="iniciarCarga()" style="width:100%; padding:15px; background:#f43f5e; color:white; border:none; border-radius:12px; cursor:pointer; font-weight:bold; font-size:1.1em;">INGRESAR</button>
+    <p id="errorMsg" style="color: #e11d48; display: none; margin-top: 15px; font-weight: 600;">⚠️ Datos incorrectos</p>
   </div>
 </div>
 
-<!-- CONTENIDO PRINCIPAL -->
-<div id="mainContent" style="display:none;">
-
-<h1>
+<div id="loadingScreen">
   <img src="https://ia601701.us.archive.org/14/items/whats-app-image-2025-08-24-at-17.32.37/VIANNEY%20CONTA.png" alt="Logo">
-</h1>
-
-<h2>Páginas principales</h2>
-
-<div class="btn-container">
-  <button class="btn btn-blue" onclick="window.open('https://autentica.tgr.cl/oauth2/authorize-front?client_id=10m9frd2n5porvv6nuv8314nas&redirect_uri=https:%2F%2Fwww.tesoreria.cl%2FLoginPortalCognito%2F&response_type=code&providers=ClaveTesoreria,ClaveTributaria,ClaveUnica&sesion=true','_blank')">TGR</button>
-  <button class="btn btn-red" onclick="window.open('https://www.previred.com/wPortal/login/login.jsp','_blank')">Previred</button>
-  <button class="btn btn-green" onclick="window.open('https://midt.dirtrab.cl/welcome','_blank')">DT</button>
-  <button class="btn btn-orange" onclick="window.open('https://zeusr.sii.cl/AUT2000/InicioAutenticacion/IngresoRutClave.html?https://misiir.sii.cl/cgi_misii/siihome.cgi/','_blank')">SII</button>
-  <button class="btn btn-red" onclick="window.open('https://www.registrodeempresasysociedades.cl/','_blank')">Empresa en un día</button>
-  <button class="btn btn-blue" onclick="window.open('https://www.mercadopublico.cl/Home/','_blank')">Mercado Publico</button>
-  <button class="btn btn-purple" onclick="window.open('https://mascontable.maserp.cl/','_blank')"> Alternativa de Software Contable</button>
+  <h3 style="color: #9f1239;">Preparando tu panel...</h3>
+  <div class="loader-bar">
+    <div class="loader-progress" id="pBar"></div>
+  </div>
 </div>
 
-<!-- PLATAFORMA DE PROYECTOS -->
-<div class="projects-box">
-
-  <h3>Plataforma de Proyectos</h3>
+<div id="mainContent">
+  <h1><img src="https://ia601701.us.archive.org/14/items/whats-app-image-2025-08-24-at-17.32.37/VIANNEY%20CONTA.png" alt="Logo" style="width: 300px;"></h1>
+  <h2>Páginas principales</h2>
 
   <div class="btn-container">
-    <button class="btn btn-blue" onclick="window.open('https://fondos.gob.cl/?utm_source=chatgpt.com','_blank')">
-     Fondo.Gob
-    </button>
-
-    <button class="btn btn-green" onclick="window.open('https://www.corfo.gob.cl/sites/cpp/','_blank')">
-     Corfo.Gob
-    </button>
-
-    <button class="btn btn-orange" onclick="window.open('https://startupchile.org/','_blank')">
-      Startupchile
-    </button>
-
-    <button class="btn btn-red" onclick="window.open('https://www.sercotec.cl/?utm_source=chatgpt.com','_blank')">
-      Sercotec
-    </button>
-
-    <button class="btn btn-purple" onclick="window.open('https://miportalemprendimiento.gob.cl/login','_blank')">
-      Miportalemprendimiento
-    </button>
-
+    <button class="btn btn-blue" onclick="window.open('https://autentica.tgr.cl/oauth2/authorize-front?client_id=10m9frd2n5porvv6nuv8314nas&redirect_uri=https:%2F%2Fwww.tesoreria.cl%2FLoginPortalCognito%2F&response_type=code&providers=ClaveTesoreria,ClaveTributaria,ClaveUnica&sesion=true','_blank')">TGR</button>
+    <button class="btn btn-red" onclick="window.open('https://www.previred.com/wPortal/login/login.jsp','_blank')">Previred</button>
+    <button class="btn btn-green" onclick="window.open('https://midt.dirtrab.cl/welcome','_blank')">DT</button>
+    <button class="btn btn-orange" onclick="window.open('https://zeusr.sii.cl/AUT2000/InicioAutenticacion/IngresoRutClave.html?https://misiir.sii.cl/cgi_misii/siihome.cgi/','_blank')">SII</button>
+    <button class="btn btn-red" onclick="window.open('https://www.registrodeempresasysociedades.cl/','_blank')">Empresa en un día</button>
+    <button class="btn btn-blue" onclick="window.open('https://www.mercadopublico.cl/Home/','_blank')">Mercado Publico</button>
+    <button class="btn btn-purple" onclick="window.open('https://mascontable.maserp.cl/','_blank')">Alternativa Contable</button>
   </div>
 
-<!-- PLATAFORMA DE BANCOS -->
-
-<div class="projects-box" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);">
-    <h3>Bancos y Pagos</h3>
-    <div class="bank-grid">
-        
-        <div class="bank-card" onclick="window.open('https://app.santander.cl/UI.Web.HB/Private_new/frame/#/public/login','_blank')">
-            <img src="https://logos-marcas.com/wp-content/uploads/2020/11/Banco-Santander-Logotipo-1989-1999.jpg" alt="Santander">
-        </div>
-
-        <div class="bank-card" onclick="window.open('https://www.bancoestado.cl','_blank')">
-            <img src="https://estadodemicuenta.com/wp-content/uploads/2021/01/Banco-Estado-1000x564.jpg" alt="BancoEstado">
-        </div>
-
-        <div class="bank-card" onclick="window.open('https://ww3.bancochile.cl','_blank')">
-            <img src="https://tse3.mm.bing.net/th/id/OIP.YTd9mLLN8677mwCVShs-ZwHaE8?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Banco de Chile">
-        </div>
-
-        <div class="bank-card" onclick="window.open('https://www.itau.cl','_blank')">
-            <img src="https://logos-world.net/wp-content/uploads/2024/03/Banco-Itau-Logo-New.png" alt="Itaú">
-        </div>
-
-        <div class="bank-card" onclick="window.open('https://www.bci.cl/personas','_blank')">
-            <img src="https://cdn3.bci.cl/uploads/2ab33fe4-2e4f-4124-b0ca-0a7d00b897ff/original/bci_logo.png" alt="BCI">
-        </div>
-
-        <div class="bank-card" onclick="window.open('https://www.scotiabank.cl','_blank')">
-            <img src="https://i2.wp.com/puntacana-bavaro.com/wp-content/uploads/2017/05/scotiabank_logo.jpg?fit=900%2C587&ssl=1" alt="Scotiabank">
-        </div>
-
-    </div>
-</div>
-
-<!-- FIN DE PLATAFORMA DE BANCOS -->
-</div>
-
-
-
-<!-- Botones flotantes -->
-<div class="floating-btn whatsapp-btn" onclick="window.open('https://web.whatsapp.com/send?phone=569XXXXXXXX&text=Hola!','_blank')">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
-</div>
-
-<div class="floating-btn gmail-btn" onclick="window.open('https://mail.google.com/','_blank')">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Gmail_Icon.png" alt="Gmail">
-</div>
-
-<div class="floating-btn calc-btn" onclick="toggleCalc()">
-  <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
-    <path d="M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 2v16h12V4H6zm2 2h2v2H8V6zm4 0h2v2h-2V6zm-4 4h2v2H8v-2zm4 0h2v2h-2v-2zm-4 4h2v2H8v-2zm4 0h2v2h-2v-2z"/>
-  </svg>
-</div>
-
-<div class="floating-btn calendar-btn" onclick="toggleCalendar()">
-  <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
-    <path d="M3 4h18v2H3V4zm0 4h18v14H3V8zm2 2v10h14V10H5z"/>
-  </svg>
-</div>
-
-<div class="floating-btn notes-btn" onclick="toggleNotes()">
-  <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
-    <path d="M19 3H5c-1.1 0-2 .9-2 2v14l4-4h12c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
-  </svg>
-</div>
-
-<!-- Cronómetro -->
-<div class="floating-btn timer-btn" onclick="window.open('https://fran5142.github.io/Cron-metro-vianney-conta/','_blank')">
-  <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
-    <path d="M15.07 1H8.93v2h6.14V1zM12 6a9 9 0 1 0 0 18 9 9 0 0 0 0-18zm0 16a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm.5-10h-1v5l4.28 2.54.5-.86-3.78-2.18V12z"/>
-  </svg>
-</div>
-
-</div> <!-- FIN mainContent -->
-
-<!-- Calculadora Modal -->
-<div class="calc-modal" id="calcModal" style="display:none;">
-  <div class="calc-container">
-    <div id="calc-history" class="calc-history"></div>
-    <div id="calc-display" class="calc-display">0</div>
-    <div class="calc-buttons">
-      <button class="clear" onclick="clearCalc()">C</button>
-      <button onclick="appendCalc('/')">÷</button>
-      <button onclick="appendCalc('*')">×</button>
-      <button onclick="appendCalc('-')">−</button>
-      <button onclick="appendCalc('7')">7</button>
-      <button onclick="appendCalc('8')">8</button>
-      <button onclick="appendCalc('9')">9</button>
-      <button onclick="appendCalc('+')">+</button>
-      <button onclick="appendCalc('4')">4</button>
-      <button onclick="appendCalc('5')">5</button>
-      <button onclick="appendCalc('6')">6</button>
-      <button onclick="appendCalc('.')">.</button>
-      <button onclick="appendCalc('1')">1</button>
-      <button onclick="appendCalc('2')">2</button>
-      <button onclick="appendCalc('3')">3</button>
-      <button class="equal" onclick="calculate()">=</button>
-      <button onclick="appendCalc('0')" style="grid-column: span 2;">0</button>
+  <div class="projects-box">
+    <h3>Plataforma de Proyectos</h3>
+    <div class="btn-container">
+      <button class="btn btn-blue" onclick="window.open('https://fondos.gob.cl/','_blank')">Fondo.Gob</button>
+      <button class="btn btn-green" onclick="window.open('https://www.corfo.gob.cl/sites/cpp/','_blank')">Corfo.Gob</button>
+      <button class="btn btn-orange" onclick="window.open('https://startupchile.org/','_blank')">Startupchile</button>
+      <button class="btn btn-red" onclick="window.open('https://www.sercotec.cl/','_blank')">Sercotec</button>
+      <button class="btn btn-purple" onclick="window.open('https://miportalemprendimiento.gob.cl/login','_blank')">Portal Emprendedor</button>
     </div>
   </div>
-</div>
 
-<!-- Calendario Modal (overlay + content) -->
-<div class="calendar-modal" id="calendarModal">
-  <div class="calendar-content" role="dialog" aria-modal="true">
-    <div class="calendar-header">
-      <div class="left">
-        <button onclick="prevMonth()">◀</button>
-        <button onclick="nextMonth()">▶</button>
+  <div class="projects-box">
+      <h3>Bancos y Pagos</h3>
+      <div class="bank-grid">
+          <div class="bank-card" onclick="window.open('https://app.santander.cl/','_blank')"><img src="https://logos-marcas.com/wp-content/uploads/2020/11/Banco-Santander-Logotipo-1989-1999.jpg" alt="S"></div>
+          <div class="bank-card" onclick="window.open('https://www.bancoestado.cl','_blank')"><img src="https://estadodemicuenta.com/wp-content/uploads/2021/01/Banco-Estado-1000x564.jpg" alt="BE"></div>
+          <div class="bank-card" onclick="window.open('https://ww3.bancochile.cl','_blank')"><img src="https://tse3.mm.bing.net/th/id/OIP.YTd9mLLN8677mwCVShs-ZwHaE8?rs=1&pid=ImgDetMain" alt="BC"></div>
+          <div class="bank-card" onclick="window.open('https://www.itau.cl','_blank')"><img src="https://logos-world.net/wp-content/uploads/2024/03/Banco-Itau-Logo-New.png" alt="I"></div>
+          <div class="bank-card" onclick="window.open('https://www.bci.cl/personas','_blank')"><img src="https://cdn3.bci.cl/uploads/2ab33fe4-2e4f-4124-b0ca-0a7d00b897ff/original/bci_logo.png" alt="B"></div>
+          <div class="bank-card" onclick="window.open('https://www.scotiabank.cl','_blank')"><img src="https://i2.wp.com/puntacana-bavaro.com/wp-content/uploads/2017/05/scotiabank_logo.jpg" alt="SC"></div>
       </div>
-      <div id="monthYear"></div>
-      <div>
-        <button class="calendar-close" onclick="closeCalendar()">✖</button>
+  </div>
+
+  <div class="calc-modal" id="calcModal">
+    <div class="calc-container">
+      <div id="calc-history" class="calc-history"></div>
+      <div id="calc-display" class="calc-display">0</div>
+      <div class="calc-buttons">
+        <button class="clear" onclick="clearCalc()">C</button>
+        <button onclick="appendCalc('/')">÷</button>
+        <button onclick="appendCalc('*')">×</button>
+        <button onclick="appendCalc('-')">−</button>
+        <button onclick="appendCalc('7')">7</button>
+        <button onclick="appendCalc('8')">8</button>
+        <button onclick="appendCalc('9')">9</button>
+        <button onclick="appendCalc('+')">+</button>
+        <button onclick="appendCalc('4')">4</button>
+        <button onclick="appendCalc('5')">5</button>
+        <button onclick="appendCalc('6')">6</button>
+        <button onclick="appendCalc('.')">.</button>
+        <button onclick="appendCalc('1')">1</button>
+        <button onclick="appendCalc('2')">2</button>
+        <button onclick="appendCalc('3')">3</button>
+        <button class="equal" onclick="calculate()">=</button>
+        <button onclick="appendCalc('0')" style="grid-column: span 2;">0</button>
       </div>
     </div>
-    <div class="calendar-grid" id="calendarGrid"></div>
   </div>
-</div>
 
-<!-- Notas Modal (overlay + content) -->
-<div class="notes-modal" id="notesModal">
-  <div class="notes-content" role="dialog" aria-modal="true">
-    <div class="notes-header">
-      <h3>Notas rápidas</h3>
-      <button class="notes-close" onclick="closeNotes()">✖</button>
-    </div>
-
-    <div class="notes-list" id="notesContainer"></div>
-
-    <div class="notes-inputs">
-      <textarea id="noteInput" placeholder="Escribe tu nota..."></textarea>
-      <button class="add-btn" onclick="addNote()">Agregar</button>
-
-      <!-- colores limitados -->
-      <button class="color-btn" id="c-yellow" title="Amarillo" style="background:#ffeb3b" onclick="setNoteColor('#ffeb3b')"></button>
-      <button class="color-btn" id="c-pink" title="Rosado" style="background:#ff6fa3" onclick="setNoteColor('#ff6fa3')"></button>
-      <button class="color-btn" id="c-green" title="Verde" style="background:#b2f28a" onclick="setNoteColor('#b2f28a')"></button>
-      <button class="color-btn" id="c-blue" title="Azul" style="background:#bfe8ff" onclick="setNoteColor('#bfe8ff')"></button>
-      <button class="color-btn" id="c-red" title="Rojo" style="background:#ff9b9b" onclick="setNoteColor('#ff9b9b')"></button>
+  <div class="calendar-modal" id="calendarModal">
+    <div class="calendar-content">
+      <div class="calendar-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+        <div><button onclick="prevMonth()" style="background:#6c3483; color:#fff; border:none; padding:5px; border-radius:5px; cursor:pointer;">◀</button>
+        <button onclick="nextMonth()" style="background:#6c3483; color:#fff; border:none; padding:5px; border-radius:5px; cursor:pointer;">▶</button></div>
+        <div id="monthYear"></div>
+        <button onclick="closeCalendar()" style="background:#e74c3c; color:white; border:none; padding:5px 10px; border-radius:5px; cursor:pointer;">✖</button>
+      </div>
+      <div class="calendar-grid" id="calendarGrid"></div>
     </div>
   </div>
-</div>
 
-<div class="floating-btn bank-btn" onclick="scrollToBancos()" style="right: 420px; background-color: #34495e; bottom: 20px; animation: bounce 2s infinite 1.2s;">
-  <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="28" height="28">
-    <path d="M11.5 1L2 6v2h19V6l-9.5-5zM2 22h19v-3H2v3zm4-13v7h3V9H6zm5 0v7h3V9h-3zm5 0v7h3V9h-3z"/>
-  </svg>
+  <div class="notes-modal" id="notesModal">
+    <div class="notes-content">
+      <div style="display:flex; justify-content:space-between; margin-bottom:15px;">
+        <h3>Notas rápidas</h3>
+        <button onclick="closeNotes()" style="background:#e74c3c; color:white; border:none; border-radius:8px; padding:5px 10px; cursor:pointer;">✖</button>
+      </div>
+      <div id="notesContainer" style="max-height:300px; overflow-y:auto; margin-bottom:15px;"></div>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <textarea id="noteInput" style="width:100%; padding:8px; border-radius:8px;" placeholder="Escribe tu nota..."></textarea>
+        <div style="display:flex; gap:5px; align-items:center;">
+            <button onclick="addNote()" style="background:#333; color:white; border:none; padding:8px 15px; border-radius:8px; cursor:pointer;">Agregar</button>
+            <button class="color-btn" id="c-yellow" onclick="setNoteColor('#ffeb3b')"></button>
+            <button class="color-btn" id="c-pink" onclick="setNoteColor('#ff6fa3')"></button>
+            <button class="color-btn" id="c-green" onclick="setNoteColor('#b2f28a')"></button>
+            <button class="color-btn" id="c-blue" onclick="setNoteColor('#bfe8ff')"></button>
+            <button class="color-btn" id="c-red" onclick="setNoteColor('#ff9b9b')"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="floating-btn whatsapp-btn" onclick="window.open('https://web.whatsapp.com/','_blank')"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WA" width="28"></div>
+  <div class="floating-btn gmail-btn" onclick="window.open('https://mail.google.com/','_blank')"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Gmail_Icon.png" alt="GM" width="28"></div>
+  <div class="floating-btn calc-btn" onclick="toggleCalc()"><svg fill="white" width="28" viewBox="0 0 24 24"><path d="M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 2v16h12V4H6zm2 2h2v2H8V6zm4 0h2v2h-2V6zm-4 4h2v2H8v-2zm4 0h2v2h-2v-2zm-4 4h2v2H8v-2zm4 0h2v2h-2v-2z"/></svg></div>
+  <div class="floating-btn calendar-btn" onclick="toggleCalendar()"><svg fill="white" width="28" viewBox="0 0 24 24"><path d="M3 4h18v2H3V4zm0 4h18v14H3V8zm2 2v10h14V10H5z"/></svg></div>
+  <div class="floating-btn notes-btn" onclick="toggleNotes()"><svg fill="white" width="28" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14l4-4h12c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg></div>
+  <div class="floating-btn timer-btn" onclick="window.open('https://fran5142.github.io/Cron-metro-vianney-conta/','_blank')"><svg fill="white" width="28" viewBox="0 0 24 24"><path d="M15.07 1H8.93v2h6.14V1zM12 6a9 9 0 1 0 0 18 9 9 0 0 0 0-18zm0 16a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm.5-10h-1v5l4.28 2.54.5-.86-3.78-2.18V12z"/></svg></div>
+
 </div>
 
 <script>
-function scrollToBancos() {
-  const seccionBancos = document.querySelector('.projects-box:last-of-type');
-  seccionBancos.scrollIntoView({ behavior: 'smooth' });
+/* LÓGICA DE LOGIN CON MÚLTIPLES USUARIOS */
+function iniciarCarga() {
+    const user = document.getElementById('userInput').value;
+    const pass = document.getElementById('passInput').value;
+
+    // AQUÍ PUEDES AGREGAR MÁS USUARIOS SIGUIENDO EL FORMATO "USUARIO": "CLAVE"
+    const usuarios = {
+        "Ney": "123",
+        "18563173": "1234",
+        "Bryan": "123"
+    };
+
+    if (usuarios[user] && usuarios[user] === pass) {
+        document.getElementById('loginOverlay').style.display = 'none';
+        document.getElementById('loadingScreen').style.display = 'flex';
+        setTimeout(() => { document.getElementById('pBar').style.width = '100%'; }, 30);
+        setTimeout(() => {
+            document.getElementById('loadingScreen').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'flex';
+        }, 3000);
+    } else {
+        document.getElementById('errorMsg').style.display = 'block';
+    }
 }
+function handleLoginKey(e) { if (e.key === "Enter") iniciarCarga(); }
 
-/* --- LOGIN FUNCIONAL --- */
-function checkLogin(){
-  const user = document.getElementById('username').value.trim();
-  const pass = document.getElementById('password').value.trim();
-
-  // Lista de usuarios y contraseñas permitidos
-  // Añade aquí más usuarios siguiendo el formato {nombre:"Usuario", clave:"Contraseña"}
-  const usuarios = [
-    {nombre:"Ney",     clave:"Ney130124"},
-    {nombre:"Bryan",   clave:"Bryan123"},
-    {nombre:"18563173",  clave:"1234"},
-    {nombre:"Corfo",  clave:"1234"},
-    {nombre:"Invitados",  clave:"12345678"}
-  ];
-
-  // buscar si hay coincidencia
-  const valido = usuarios.some(u => u.nombre === user && u.clave === pass);
-
-  if(valido){
-    document.getElementById('loginScreen').style.display="none";
-    document.getElementById('mainContent').style.display="block";
-  } else {
-    alert("Usuario o contraseña incorrectos ❌");
-  }
-}
-
-/* --- CALCULADORA --- */
+/* LÓGICA DE CALCULADORA (CON SOPORTE TECLADO) */
 let calcExpression="";
 function toggleCalc(){
   const modal = document.getElementById("calcModal");
   modal.style.display = (modal.style.display==="flex" || modal.style.display==="block") ? "none" : "flex";
 }
+
 function appendCalc(value){
   if(calcExpression==="0") calcExpression="";
   calcExpression += value;
   document.getElementById("calc-display").textContent = calcExpression;
 }
+
 function clearCalc(){
   calcExpression="";
   document.getElementById("calc-display").textContent="0";
   document.getElementById("calc-history").textContent="";
 }
+
 function calculate(){
   try{
+    if(calcExpression === "") return;
     let result = eval(calcExpression);
     result = Math.round(result * 100) / 100;
-    document.getElementById("calc-history").textContent = calcExpression + " = " + result;
+    document.getElementById("calc-history").innerHTML += calcExpression + " = " + result + "<br>";
+    const hist = document.getElementById("calc-history");
+    hist.scrollTop = hist.scrollHeight;
     calcExpression = result.toString();
     document.getElementById("calc-display").textContent = calcExpression;
   } catch {
@@ -643,13 +354,21 @@ function calculate(){
     calcExpression = "";
   }
 }
-// cerrar calculadora si clic fuera (ya era overlay)
-// y cerrar con Esc también (global listener más abajo)
-document.getElementById('calcModal').addEventListener('click', function(e){
-  if(e.target === this) this.style.display = 'none';
+
+// ESCUCHA DEL TECLADO PARA LA CALCULADORA
+document.addEventListener('keydown', (e) => {
+  const modal = document.getElementById("calcModal");
+  if (modal.style.display === "flex") {
+    const key = e.key;
+    if (!isNaN(key)) appendCalc(key); // Si es número
+    if (['+', '-', '*', '/','.'].includes(key)) appendCalc(key);
+    if (key === "Enter") { e.preventDefault(); calculate(); }
+    if (key === "Escape") toggleCalc();
+    if (key === "Backspace" || key === "Delete") { e.preventDefault(); clearCalc(); }
+  }
 });
 
-/* --- CALENDARIO --- */
+/* LÓGICA DE CALENDARIO */
 let currentDate = new Date();
 let calendarNotes = JSON.parse(localStorage.getItem("calendarNotes") || "{}");
 const monthNames = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
@@ -663,95 +382,54 @@ function renderCalendar(){
   monthYear.textContent = monthNames[month] + " " + year;
   const firstDay = new Date(year, month, 1).getDay();
   const totalDays = new Date(year, month + 1, 0).getDate();
-
   const weekdays = ["D","L","M","M","J","V","S"];
   weekdays.forEach(d=>{
     const wd = document.createElement('div');
-    wd.className = 'calendar-weekday';
-    wd.textContent = d;
+    wd.className = 'calendar-weekday'; wd.textContent = d;
     calendarGrid.appendChild(wd);
   });
-
-  for(let i=0;i<firstDay;i++){
-    calendarGrid.appendChild(document.createElement('div'));
-  }
-
+  for(let i=0;i<firstDay;i++) calendarGrid.appendChild(document.createElement('div'));
   for(let d=1; d<=totalDays; d++){
     const cell = document.createElement('div');
     cell.className = 'calendar-date';
-    const dayNum = document.createElement('div');
-    dayNum.textContent = d;
+    const dayNum = document.createElement('div'); dayNum.textContent = d;
     cell.appendChild(dayNum);
-
     const key = `${year}-${month+1}-${d}`;
     if(calendarNotes[key]){
       const noteDiv = document.createElement('div');
-      noteDiv.className = 'note-text';
-      noteDiv.textContent = calendarNotes[key];
+      noteDiv.className = 'note-text'; noteDiv.textContent = calendarNotes[key];
       cell.appendChild(noteDiv);
     }
-
-    cell.addEventListener('click', ()=>{
+    cell.onclick = ()=>{
       const nota = prompt('Nota para '+d+'-'+(month+1)+'-'+year, calendarNotes[key]||'');
       if(nota === null) return;
-      if(nota.trim()==='') { delete calendarNotes[key]; }
-      else { calendarNotes[key] = nota; }
+      if(nota.trim()==='') delete calendarNotes[key];
+      else calendarNotes[key] = nota;
       localStorage.setItem('calendarNotes', JSON.stringify(calendarNotes));
       renderCalendar();
-    });
-
+    };
     calendarGrid.appendChild(cell);
   }
 }
-
 function toggleCalendar(){
   const modal = document.getElementById('calendarModal');
-  const showing = (modal.style.display === 'flex');
-  if(showing){ closeCalendar(); }
-  else {
-    modal.style.display = 'flex';
-    renderCalendar();
-  }
+  if(modal.style.display === 'flex') closeCalendar();
+  else { modal.style.display = 'flex'; renderCalendar(); }
 }
-function closeCalendar(){
-  document.getElementById('calendarModal').style.display = 'none';
-}
-document.getElementById('calendarModal').addEventListener('click', function(e){
-  if(e.target === this) closeCalendar();
-});
+function closeCalendar(){ document.getElementById('calendarModal').style.display = 'none'; }
+function nextMonth(){ currentDate.setMonth(currentDate.getMonth()+1); renderCalendar(); }
+function prevMonth(){ currentDate.setMonth(currentDate.getMonth()-1); renderCalendar(); }
 
-/* --- NOTAS FLOTANTES --- */
+/* LÓGICA DE NOTAS */
 let customNotes = JSON.parse(localStorage.getItem('customNotes') || "[]");
-let selectedColor = '#ffeb3b'; // default
-
-function setNoteColor(color){
-  selectedColor = color;
-  // marcar visualmente el seleccionado
-  document.querySelectorAll('.color-btn').forEach(b=>{
-    b.classList.remove('selected');
-  });
-  // encontrar el botón que tenga ese estilo background
-  document.querySelectorAll('.color-btn').forEach(b=>{
-    if(b.style.background === color || b.style.background === color.replace('#','')){ b.classList.add('selected'); }
-    // additional check for named colors:
-    if(color === 'yellow' && b.id === 'c-yellow') b.classList.add('selected');
-  });
-}
-
+let selectedColor = '#ffeb3b';
+function setNoteColor(color){ selectedColor = color; }
 function toggleNotes(){
   const modal = document.getElementById('notesModal');
-  if(modal.style.display === 'flex'){
-    closeNotes();
-  } else {
-    modal.style.display = 'flex';
-    renderNotes();
-  }
+  if(modal.style.display === 'flex') closeNotes();
+  else { modal.style.display = 'flex'; renderNotes(); }
 }
-
-function closeNotes(){
-  document.getElementById('notesModal').style.display = 'none';
-}
-
+function closeNotes(){ document.getElementById('notesModal').style.display = 'none'; }
 function addNote(){
   const txt = document.getElementById('noteInput').value.trim();
   if(!txt) return;
@@ -760,66 +438,34 @@ function addNote(){
   document.getElementById('noteInput').value = '';
   renderNotes();
 }
-
 function renderNotes(){
   const container = document.getElementById('notesContainer');
   container.innerHTML = '';
-  if(!Array.isArray(customNotes)) customNotes = [];
   customNotes.forEach((n, i)=>{
     const card = document.createElement('div');
-    card.className = 'note-card';
-    card.style.background = n.color;
-    card.textContent = n.text;
-    // eliminar al hacer clic (confirm)
-    card.addEventListener('click', ()=>{
-      if(confirm('¿Eliminar esta nota?')){
-        customNotes.splice(i,1);
-        localStorage.setItem('customNotes', JSON.stringify(customNotes));
-        renderNotes();
-      }
-    });
+    card.className = 'note-card'; card.style.background = n.color; card.textContent = n.text;
+    card.onclick = ()=>{ if(confirm('¿Eliminar?')){ customNotes.splice(i,1); localStorage.setItem('customNotes', JSON.stringify(customNotes)); renderNotes(); } };
     container.appendChild(card);
   });
 }
 
-// cerrar modals clicando fuera (overlay) ya montado; añadir event listener:
-document.getElementById('notesModal').addEventListener('click', function(e){
-  if(e.target === this) closeNotes();
-});
-
-// seleccionar color por defecto visualmente al iniciar
-(function initNoteColors(){
-  // inicializo botones con colores y selecciono el primero
-  const cYellow = document.getElementById('c-yellow');
-  const cPink = document.getElementById('c-pink');
-  const cGreen = document.getElementById('c-green');
-  const cBlue = document.getElementById('c-blue');
-  const cRed = document.getElementById('c-red');
-  // map named colors to hex for consistency:
-  cYellow.style.background = "#ffeb3b";
-  cPink.style.background   = "#ff6fa3";
-  cGreen.style.background  = "#b2f28a";
-  cBlue.style.background   = "#bfe8ff";
-  cRed.style.background    = "#ff9b9b";
-  setNoteColor('#ffeb3b');
-  // cargar notas guardadas
+(function init(){
+  document.getElementById('c-yellow').style.background = "#ffeb3b";
+  document.getElementById('c-pink').style.background = "#ff6fa3";
+  document.getElementById('c-green').style.background = "#b2f28a";
+  document.getElementById('c-blue').style.background = "#bfe8ff";
+  document.getElementById('c-red').style.background = "#ff9b9b";
   renderNotes();
 })();
 
-/* --- CERRAR CON ESC --- */
-document.addEventListener('keydown', function(e){
-  if(e.key === 'Escape' || e.key === 'Esc'){
-    // cerrar todas las modales si están abiertas
-    const modalIds = ['notesModal','calendarModal','calcModal'];
-    modalIds.forEach(id=>{
-      const el = document.getElementById(id);
-      if(el && (el.style.display === 'flex' || el.style.display === 'block')) el.style.display = 'none';
-    });
-  }
-});
+window.onclick = function(event) {
+  const calc = document.getElementById('calcModal');
+  const calen = document.getElementById('calendarModal');
+  const notes = document.getElementById('notesModal');
+  if (event.target == calc) calc.style.display = "none";
+  if (event.target == calen) calen.style.display = "none";
+  if (event.target == notes) notes.style.display = "none";
+}
 </script>
-
 </body>
 </html>
-
-
