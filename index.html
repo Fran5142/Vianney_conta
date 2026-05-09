@@ -150,6 +150,7 @@ h2 { font-size: 2.2em; font-weight: 600; margin-bottom: 30px; text-align: center
 .calendar-btn { right: 260px; background-color: #9b59b6; bottom: 20px; }
 .notes-btn { right: 340px; background-color: #ff9800; bottom: 20px; }
 .timer-btn { left: 20px; background-color: #ff9800; bottom: 20px; }
+.iva-btn { left: 100px; background-color: #00bcd4; bottom: 20px; flex-direction: column; gap: 2px; }
 
 @keyframes bounce { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
 
@@ -290,6 +291,11 @@ h2 { font-size: 2.2em; font-weight: 600; margin-bottom: 30px; text-align: center
   <div class="floating-btn calendar-btn" onclick="toggleCalendar()"><svg fill="white" width="28" viewBox="0 0 24 24"><path d="M3 4h18v2H3V4zm0 4h18v14H3V8zm2 2v10h14V10H5z"/></svg></div>
   <div class="floating-btn notes-btn" onclick="toggleNotes()"><svg fill="white" width="28" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14l4-4h12c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg></div>
   <div class="floating-btn timer-btn" onclick="window.open('https://fran5142.github.io/Cron-metro-vianney-conta/','_blank')"><svg fill="white" width="28" viewBox="0 0 24 24"><path d="M15.07 1H8.93v2h6.14V1zM12 6a9 9 0 1 0 0 18 9 9 0 0 0 0-18zm0 16a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm.5-10h-1v5l4.28 2.54.5-.86-3.78-2.18V12z"/></svg></div>
+  
+  <div class="floating-btn iva-btn" onclick="window.open('https://fran5142.github.io/VIANNEYCONTA_CALCU_IVA/','_blank')" title="Calculadora IVA">
+    <svg fill="white" width="22" viewBox="0 0 24 24"><path d="M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 2v16h12V4H6zm2 2h2v2H8V6zm4 0h2v2h-2V6zm-4 4h2v2H8v-2zm4 0h2v2h-2v-2zm-4 4h2v2H8v-2zm4 0h2v2h-2v-2z"/></svg>
+    <span style="color: white; font-size: 11px; font-weight: bold; font-family: 'Inter', sans-serif;">IVA</span>
+  </div>
 
 </div>
 
